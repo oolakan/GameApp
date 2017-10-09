@@ -17,7 +17,15 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('phone');
+            $table->string('location');
+            $table->string('approval_status');
             $table->string('password');
+            $table->string('api_token', 60)->unique();
+            $table->integer('roles_id');
+            $table->foreign('roles_id')
+                ->references('id')
+                ->on('roles');
             $table->rememberToken();
             $table->timestamps();
         });
