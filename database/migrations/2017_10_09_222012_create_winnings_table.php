@@ -19,12 +19,12 @@ class CreateWinningsTable extends Migration
             $table->string('winning_date');
             $table->string('winning_time');
 
-            $table->integer('game_type_options_id');
+            $table->integer('game_type_options_id')->unsigned();
             $table->foreign('game_type_options_id')
                 ->references('id')
                 ->on('game_type_options');
 
-            $table->integer('users_id');
+            $table->integer('users_id')->unsigned();
             $table->foreign('users_id')
                 ->references('id')
                 ->on('id');

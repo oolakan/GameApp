@@ -16,7 +16,7 @@ class CreateCreditsTable extends Migration
         Schema::create('credits', function (Blueprint $table) {
             $table->increments('id');
             $table->double('amount');
-            $table->integer('funded_by');
+            $table->integer('funded_by')->unsigned();
             $table->foreign('funded_by')
                 ->references('id')
                 ->on('users');

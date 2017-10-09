@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('approval_status');
             $table->string('password');
             $table->string('api_token', 60)->unique();
-            $table->integer('roles_id');
+            $table->integer('roles_id')->unsigned();
             $table->foreign('roles_id')
                 ->references('id')
                 ->on('roles');
