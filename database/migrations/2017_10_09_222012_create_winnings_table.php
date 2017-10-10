@@ -27,7 +27,7 @@ class CreateWinningsTable extends Migration
             $table->integer('users_id')->unsigned();
             $table->foreign('users_id')
                 ->references('id')
-                ->on('id');
+                ->on('users');
             $table->timestamps();
         });
     }
