@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+
 use App\Credit;
 use App\Game;
 use App\GameName;
@@ -16,7 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class GameTypeOptionsController extends Controller
+class GameNameController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,7 +38,7 @@ class GameTypeOptionsController extends Controller
             $GameTypeOptions = GameTypeOption::all();
             $GameQuaters = GameQuater::all();
             $Winnings = Winning::all();
-            return view('game.game_type_option.index', compact([
+            return view('game.game_name.index', compact([
                 'Admins', 'Merchants', 'Agents',
                 'Games', 'GameNames', 'GameTypes', 'Winnings',
                 'GameQuaters', 'GameTypeOptions', 'Users']));
@@ -62,19 +63,20 @@ class GameTypeOptionsController extends Controller
                     ->withInput()
                     ->withErrors($validator);
             }
-            $Game                 =   new GameTypeOption();
+            $Game                 =   new GameName();
             $Game->updateOrCreate(['name' => $request->name],
                 [   'name' => $request->name,
                 ]);
             if($Game) {
-                flash()->success('Game Type Option created successfully');
-                return redirect()->action('GameTypeOptionsController@index');
+                flash()->success('Game name created successfully');
+                return redirect()->action('GameNameController@index');
             }
         }
         catch(\ErrorException$ex){
             $ex->getMessage();
         }
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -93,12 +95,12 @@ class GameTypeOptionsController extends Controller
                     ->withInput()
                     ->withErrors($validator);
             }
-            $Game                   =   GameTypeOption::find(base64_decode($id));
+            $Game                   =   GameName::find(base64_decode($id));
             $Game->name             =   $request->name;
             $Game->save();
             if($Game){
-                flash()->success('Game Type Option updated successfully');
-                return redirect()->action('GameTypeOptionsController@index');
+                flash()->success('Game name updated successfully');
+                return redirect()->action('GameNameController@index');
             }
         }
         catch(\ErrorException$ex){
@@ -112,7 +114,7 @@ class GameTypeOptionsController extends Controller
      * Destroy game
      */
     public function destroy($id){
-        GameTypeOption::destroy(base64_decode($id));
-        return redirect()->action('GameTypeOptionsController@index');
+        GameName::destroy(base64_decode($id));
+        return redirect()->action('GameNameController@index');
     }
 }

@@ -23,11 +23,11 @@
 
     <section class="content-header">
         <h1>
-            All game information
+            All Game Quaters information
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Games</a></li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home </a></li>
+            <li><a href="#">Game Quaters</a></li>
             <li class="active">view</li>
         </ol>
     </section>
@@ -51,16 +51,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($GameNames as $game)
+                            @foreach($GameQuaters as $game)
                                 <tr>
                                     <td>{{$game->name}}</td>
                                     <td><a class="btn btn-primary" data-toggle="modal" data-target="#edit-{{$game->id}}"><i class="fa fa-pencil"></i> Edit</a>
                                         <!-- Edit form-->
-                                        @include('game.game_name.edit')
+                                        @include('game.game_quater.edit')
                                     </td>
                                     <td>
-                                        <form method="GET" action="{{url('/game/delete/'.base64_encode($game->id))}}" accept-charset="UTF-8" style="display:inline">
-                                            <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete User" data-message="Are you sure you want to delete this game ?">
+                                        <form method="GET" action="{{url('/game/game_quater/delete/'.base64_encode($game->id))}}" accept-charset="UTF-8" style="display:inline">
+                                            <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete User" data-message="Are you sure you want to delete this game quater ?">
                                                 <i class="glyphicon glyphicon-trash"></i> Delete
                                             </button>
                                         </form>
@@ -74,7 +74,7 @@
             </div>
         </div>
     </section>
-    @include('game.game_name.create')
+    @include('game.game_quater.create')
     @include('delete_confirm.delete_confirm')
 @endsection
 

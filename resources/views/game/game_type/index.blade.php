@@ -42,7 +42,8 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <caption> <div align ="right">
                                     <a class="btn btn-success" data-toggle="modal" data-target="#add-new-game"><i class="fa fa-plus"></i> Add New </a>
-                                </div></caption>
+                                </div>
+                            </caption>
                             <thead>
                             <tr>
                                 <th>Name</th>

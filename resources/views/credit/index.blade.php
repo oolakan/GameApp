@@ -34,7 +34,7 @@
 
     <section class="content">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-10">
                 <div class="box">
                     @include('flash::message')
                     <!-- /.box-header -->
@@ -45,7 +45,7 @@
                                 <th>Name</th>
                                 <th>Role</th>
                                 <th>Amount</th>
-                                <th>Edit/Topup</th>
+                                <th>Edit / Topup credit</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -54,7 +54,7 @@
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->role->name}}</td>
                                     <td>{{@$user->credit->amount}}</td>
-                                    <td><a class="btn btn-primary" data-toggle="modal" data-target="#edit-{{$user->id}}"><i class="fa fa-pencil"></i> Edit/Topup</a>
+                                    <td><a class="btn btn-success" data-toggle="modal" data-target="#edit-{{$user->id}}"><i class="fa fa-pencil"></i> Edit / Topup credit</a>
                                         <!-- Edit form-->
                                         @include('credit.edit')
                                     </td>

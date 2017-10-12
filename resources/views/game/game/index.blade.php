@@ -34,7 +34,7 @@
 
     <section class="content">
         <div class="row">
-            <div class="col-xs-7">
+            <div class="col-xs-12">
                 <div class="box">
                     @include('flash::message')
                     <!-- /.box-header -->
@@ -45,22 +45,36 @@
                                 </div></caption>
                             <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Game Name</th>
+                                <th>Game Type</th>
+                                <th>Game Option</th>
+                                <th>Game Quater</th>
+                                <th>Start Time</th>
+                                <th>Stop Time</th>
+                                <th>Status</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($GameNames as $game)
+                            @foreach($Games as $game)
                                 <tr>
-                                    <td>{{$game->name}}</td>
+
+                                    <td>{{$game->game_name->name}}</td>
+                                    <td>{{$game->game_type->name}}</td>
+                                    <td>{{$game->game_type_option->name}}</td>
+                                    <td>{{$game->game_quater->name}}</td>
+                                    <td>{{$game->start_time}}</td>
+                                    <td>{{$game->stop_time}}</td>
+                                    <td>@if( $game->game_status == 0 ) OPENED @else CLOSED @endif</td>
+
                                     <td><a class="btn btn-primary" data-toggle="modal" data-target="#edit-{{$game->id}}"><i class="fa fa-pencil"></i> Edit</a>
                                         <!-- Edit form-->
-                                        @include('game.game_name.edit')
+                                        @include('game.game.edit')
                                     </td>
                                     <td>
                                         <form method="GET" action="{{url('/game/delete/'.base64_encode($game->id))}}" accept-charset="UTF-8" style="display:inline">
-                                            <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete User" data-message="Are you sure you want to delete this game ?">
+                                            <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Game" data-message="Are you sure you want to delete this game?">
                                                 <i class="glyphicon glyphicon-trash"></i> Delete
                                             </button>
                                         </form>
@@ -74,7 +88,7 @@
             </div>
         </div>
     </section>
-    @include('game.game_name.create')
+    @include('game.game.create')
     @include('delete_confirm.delete_confirm')
 @endsection
 

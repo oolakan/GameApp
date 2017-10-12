@@ -16,13 +16,6 @@ class CreateGameQuatersTable extends Migration
         Schema::create('game_quaters', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('start_time');
-            $table->string('stop_time');
-
-            $table->integer('users_id')->unsigned();
-            $table->foreign('users_id')
-                ->references('id')
-                ->on('users');
 
             $table->timestamps();
         });

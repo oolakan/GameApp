@@ -15,7 +15,6 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->integer('game_status');
 
             $table->integer('game_names_id')->unsigned();
@@ -28,15 +27,18 @@ class CreateGamesTable extends Migration
                 ->references('id')
                 ->on('game_types');
 
-            $table->integer('game_type_options_id');
+            $table->integer('game_type_options_id')->unsigned();
             $table->foreign('game_type_options_id')
                 ->references('id')
                 ->on('game_type_options');
 
-            $table->integer('game_quaters_id');
+            $table->integer('game_quaters_id')->unsigned();
             $table->foreign('game_quaters_id')
                 ->references('id')
                 ->on('game_quaters');
+
+            $table->string('start_time');
+            $table->string('stop_time');
 
             $table->integer('users_id')->unsigned();
             $table->foreign('users_id')

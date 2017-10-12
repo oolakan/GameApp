@@ -9,17 +9,6 @@
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <table class="table table-stripped">
-                        <tr>
-                            <th width="40%">Game Name</th>
-                            <td>
-                                <select name="games_id" required="" class="form-control">
-                                    <option value="">Select Game Name</option>
-                                    @foreach($Games as $_game)
-                                        <option value="{{$_game->id}}">{{$_game->name}}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                        </tr>
 
                         <tr>
                             <th width="40%">Name</th>

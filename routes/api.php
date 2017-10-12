@@ -20,3 +20,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'api/v1', 'middleware' => 'auth:api'], function () {
     Route::post('/short', 'UrlMapperController@store');
 });
+
+//users
+Route::group(['prefix'  =>  'api/v1'], function(){
+    Route::get('/', 'UserController@index');
+    Route::get('/auth', 'UserController@create')->middleware('auth:api');
+    Route::post('/getuser/{id}', 'UserController@update')->middleware('auth:api');
+    Route::get('/update/{id}', 'UserController@destroy')->middleware('auth:api');
+    Route::post('/store', 'UserController@store')->middleware('auth:api');
+});

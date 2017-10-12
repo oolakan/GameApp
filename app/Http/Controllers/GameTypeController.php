@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 
 use App\Credit;
 use App\Game;
+use App\GameName;
+use App\GameQuater;
 use App\GameType;
+use App\GameTypeOption;
 use App\Role;
 use App\User;
 use App\Winning;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
 class GameTypeController extends Controller
 {
     /**
@@ -28,10 +32,15 @@ class GameTypeController extends Controller
             $Merchants = User::with('role')->where('roles_id', '=', 2)->get();
             $Agents = User::with('role')->where('roles_id', '=', 3)->get();
             $Games = Game::all();
+            $GameNames = GameName::all();
             $GameTypes = GameType::all();
+            $GameTypeOptions = GameTypeOption::all();
+            $GameQuaters = GameQuater::all();
             $Winnings = Winning::all();
-            return view('game.game_type.index', compact(['Admins', 'Merchants', 'Agents',
-                'Games', 'GameTypes', 'Winnings', 'Users']));
+            return view('game.game_type.index', compact([
+                'Admins', 'Merchants', 'Agents',
+                'Games', 'GameNames', 'GameTypes', 'Winnings',
+                'GameQuaters', 'GameTypeOptions', 'Users']));
         }catch (\ErrorException $ex){
             $ex->getMessage();
         }
@@ -56,10 +65,9 @@ class GameTypeController extends Controller
             $Game                 =   new GameType();
             $Game->updateOrCreate(['name' => $request->name],
                 [   'name' => $request->name,
-                    'games_id' => $request->games_id
                 ]);
-            if($Game){
-                flash()->success('Credit balance updated successfully');
+            if($Game) {
+                flash()->success('Game Type created successfully');
                 return redirect()->action('GameTypeController@index');
             }
         }
@@ -105,7 +113,7 @@ class GameTypeController extends Controller
      * Destroy game
      */
     public function destroy($id){
-        Game::destroy(base64_decode($id));
-        return redirect()->action('GameController@index');
+        GameType::destroy(base64_decode($id));
+        return redirect()->action('GameTypeController@index');
     }
 }

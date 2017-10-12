@@ -34,36 +34,34 @@
 
     <section class="content">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-7">
                 <div class="box">
                     @include('flash::message')
                     <!-- /.box-header -->
                     <div class="box-body">
                         <table id="example1" class="table table-bordered table-striped">
+                            <caption> <div align ="right">
+                                    <a class="btn btn-success" data-toggle="modal" data-target="#add-new-game"><i class="fa fa-plus"></i> Add New </a>
+                                </div>
+                            </caption>
                             <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Email</th>
-                                <th>Mobile</th>
-                                <th>Role</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($Users as $user)
+                            @foreach($GameTypeOptions as $game)
                                 <tr>
-                                    <td>{{$user->name}}</td>
-                                    <td>{{$user->email}}</td>
-                                    <td>{{$user->phone}}</td>
-                                    <td>{{$user->role->name}}</td>
-                                    <td><a class="btn btn-primary" data-toggle="modal" data-target="#edit-{{$user->id}}"><i class="fa fa-pencil"></i> Edit</a>
+                                    <td>{{$game->name}}</td>
+                                    <td><a class="btn btn-primary" data-toggle="modal" data-target="#edit-{{$game->id}}"><i class="fa fa-pencil"></i> Edit</a>
                                         <!-- Edit form-->
-                                        @include('user.edit')
+                                        @include('game.game_type_option.edit')
                                     </td>
                                     <td>
-                                        <form method="GET" action="{{url('/users/delete/'.base64_encode($user->id))}}" accept-charset="UTF-8" style="display:inline">
-                                            <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete User" data-message="Are you sure you want to delete this user ?">
+                                        <form method="GET" action="{{url('/users/delete/'.base64_encode($game->id))}}" accept-charset="UTF-8" style="display:inline">
+                                            <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete User" data-message="Are you sure you want to delete this game type option ?">
                                                 <i class="glyphicon glyphicon-trash"></i> Delete
                                             </button>
                                         </form>
@@ -77,7 +75,7 @@
             </div>
         </div>
     </section>
-
+    @include('game.game_type_option.create')
     @include('delete_confirm.delete_confirm')
 @endsection
 

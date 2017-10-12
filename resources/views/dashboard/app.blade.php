@@ -147,7 +147,7 @@
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-files-o"></i>
-                        <span>Games</span>
+                        <span>Game Settings</span>
                         <span class="pull-right-container">
                           <span class="label label-primary pull-right">{{count($Games)}}</span>
                         </span>
@@ -156,6 +156,8 @@
                         <li><a href="{{url('/game_name')}}"><i class="fa fa-circle-o"></i>Game Name</a></li>
                         <li><a href="{{url('/game_type')}}"><i class="fa fa-circle-o"></i>Game Types</a></li>
                         <li><a href="{{url('/game_type_option')}}"><i class="fa fa-circle-o"></i>Game Type Options</a></li>
+                        <li><a href="{{url('/game_quater')}}"><i class="fa fa-circle-o"></i>Game Quaters</a></li>
+                        <li><a href="{{url('/game')}}"><i class="fa fa-circle-o"></i>Game Information</a></li>
                     </ul>
                 </li>
                 <li class="treeview">

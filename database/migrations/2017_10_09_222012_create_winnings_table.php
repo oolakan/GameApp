@@ -30,7 +30,7 @@ class CreateWinningsTable extends Migration
                 ->references('id')
                 ->on('game_types');
 
-            $table->integer('game_type_options_id');
+            $table->integer('game_type_options_id')->unsigned();
             $table->foreign('game_type_options_id')
                 ->references('id')
                 ->on('game_type_options');
