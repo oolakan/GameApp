@@ -13,7 +13,7 @@
     <section class="content">
     <div class="col-xs-6">
     <div class="register-box-body">
-        <p class=""><h1>Add New User</h1></p>
+        <p class=""><h1>Add New Admin</h1></p>
         @include('partials.flash_message')
         <form action="{{url('/users/store')}}" method="post">
             {{ csrf_field() }}
@@ -28,10 +28,6 @@
             <div class="form-group has-feedback">
                 <input type="number" name="phone" class="form-control" placeholder="Phone" required="" value="{{old('phone')}}">
                 <span class="glyphicon glyphicon-phone form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="text" name="location" class="form-control" placeholder="Location" required="" value="{{old('location')}}">
-                <span class="glyphicon glyphicon-map-marker form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
                 <select name="roles_id" required="" class="form-control">
@@ -58,7 +54,7 @@
             <div class="row">
                 <!-- /.col -->
                 <div class="col-xs-4 pull-right">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Submit</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
                 </div>
                 <!-- /.col -->
             </div>

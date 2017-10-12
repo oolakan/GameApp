@@ -25,7 +25,7 @@
     <!-- bootstrap wysihtml5 - text editor -->
 
 </head>
-<body class="hold-transition skin-purple sidebar-mini">
+<body class="hold-transition skin-yellow sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -33,9 +33,9 @@
         <!-- Logo -->
         <a href="{{url('/dashboard')}}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>E</b>S</span>
+            <span class="logo-mini"><b>L</b>S</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Teacher</b>Guide</span>
+            <span class="logo-lg"><b>Lotto</b>Stars</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -120,69 +120,66 @@
 
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-users"></i> <span>Admin</span>
+                        <i class="fa fa-users"></i> <span>Users</span>
             <span class="pull-right-container">
                 <span class="label label-success pull-right">{{count($Users)}}</span>
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{url('/users')}}"><i class="fa fa-circle-o"></i>View Admins</a></li>
-                        <li><a href="{{url('/users/create')}}"><i class="fa fa-circle-o"></i>Add New Admin</a></li>
+                        <li><a href="{{url('/users')}}"><i class="fa fa-circle-o"></i>View Users</a></li>
+                        <li><a href="{{url('/users/create')}}"><i class="fa fa-circle-o"></i>Add New User</a></li>
                     </ul>
                 </li>
+
 
 
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-users"></i> <span>App Users</span>
-                    <span class="pull-right-container">
-                        <span class="label label-success pull-right">{{count($app_users)}}</span>
+                        <i class="fa fa-users"></i> <span>Credit Balance</span>
+                        <span class="pull-right-container">
                     </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{url('/app_user')}}"><i class="fa fa-circle-o"></i>View App Users</a></li>
-                        <li><a href="{{url('/app_user/create')}}"><i class="fa fa-circle-o"></i>Add New App User</a></li>
+                        <li><a href="{{url('/credit')}}"><i class="fa fa-circle-o"></i>View Credit Balance</a></li>
                     </ul>
                 </li>
-
 
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-files-o"></i>
-                        <span>Course Codes</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">{{count($Codes)}}</span>
-            </span>
+                        <span>Games</span>
+                        <span class="pull-right-container">
+                          <span class="label label-primary pull-right">{{count($Games)}}</span>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{url('/course/code')}}"><i class="fa fa-circle-o"></i>View Course Codes</a></li>
-                        <li><a href="{{url('/course/code/create')}}"><i class="fa fa-circle-o"></i>Add New Course Code</a></li>
+                        <li><a href="{{url('/game_name')}}"><i class="fa fa-circle-o"></i>Game Name</a></li>
+                        <li><a href="{{url('/game_type')}}"><i class="fa fa-circle-o"></i>Game Types</a></li>
+                        <li><a href="{{url('/game_type_option')}}"><i class="fa fa-circle-o"></i>Game Type Options</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-book"></i>
-                        <span>Course Materials</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">{{count($Materials)}}</span>
-            </span>
+                        <span>Winnings</span>
+                        <span class="pull-right-container">
+                          <span class="label label-primary pull-right">{{count($Winnings)}}</span>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{url('/course/material')}}"><i class="fa fa-circle-o"></i>View Course Materials</a></li>
-                        <li><a href="{{url('/course/material/create')}}"><i class="fa fa-circle-o"></i>Add New Material</a></li>
+                        <li><a href="{{url('/course/material')}}"><i class="fa fa-circle-o"></i>View Winnings</a></li>
+                        <li><a href="{{url('/course/material/create')}}"><i class="fa fa-circle-o"></i>Add New Winning Game</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-key"></i>
-                        <span>Authentication PIN</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">{{count($Pins)}}</span>
-            </span>
+                        <span>Transaction Report</span>
+                        <span class="pull-right-container">
+                        </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{url('/pin')}}"><i class="fa fa-circle-o"></i>View PIN</a></li>
-                        <li><a href="{{url('/pin/create')}}"><i class="fa fa-circle-o"></i>Add New PIN(s)</a></li>
+                        <li><a href="{{url('/pin')}}"><i class="fa fa-circle-o"></i>View Report</a></li>
                     </ul>
                 </li>
 
@@ -203,7 +200,7 @@
         <div class="pull-right hidden-xs">
             <b>Version</b> 1.0.0
         </div>
-        <strong>EasyStudy © 2017 </strong> All rights reserved.
+        <strong>LottoStars © 2017 </strong> All rights reserved.
     </footer>
 
     <!-- /#page-wrapper -->

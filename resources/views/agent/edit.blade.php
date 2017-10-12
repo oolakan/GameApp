@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title"><i class="fa fa-user"></i>MODIFY ADMIN INFO</h4>
             </div>
-            <form action="{{url('/credit/storeOrUpdate/'.base64_encode($user->id))}}" method="post">
+            <form action="{{url('/users/update/'.base64_encode($user->id))}}" method="post">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <table class="table table-stripped">

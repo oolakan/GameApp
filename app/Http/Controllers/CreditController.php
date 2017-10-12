@@ -1,8 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Credit;
+use App\Game;
+use App\Role;
+use App\User;
+use App\Winning;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CreditController extends Controller
 {
@@ -11,74 +17,51 @@ class CreditController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        //
+        try {
+            $Users = User::with(['role', 'credit'])->get();
+            $Admins = User::with('role')->where('roles_id', '=', 1)->get();
+            $Merchants = User::with('role')->where('roles_id', '=', 2)->get();
+            $Agents = User::with('role')->where('roles_id', '=', 3)->get();
+            $Games = Game::all();
+            $Winnings = Winning::all();
+            return view('credit.index', compact(['Admins', 'Merchants', 'Agents', 'Games', 'Winnings', 'Users']));
+        }catch (\ErrorException $ex){
+            $ex->getMessage();
+        }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeOrUpdate(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        try{
+            $rules = [
+                'amount' => 'required',
+            ];
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return back()
+                    ->withInput()
+                    ->withErrors($validator);
+            }
+            $Credit                 =   new Credit();
+            $Credit->updateOrCreate(['users_id' => $request->users_id],
+                [   'amount' => $request->amount,
+                    'funded_by' => Auth::user()->id,
+                    'users_id' => $request->users_id
+                ]);
+            if($Credit){
+                flash()->success('Credit balance updated successfully');
+                return redirect()->action('CreditController@index');
+            }
+        }
+        catch(\ErrorException$ex){
+            $ex->getMessage();
+        }
     }
 }

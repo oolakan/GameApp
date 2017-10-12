@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGameTransactionsTable extends Migration
+class CreateGamesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateGameTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('game_transactions', function (Blueprint $table) {
+        Schema::create('games', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('game_no_played');
-            $table->string('ticket_id');
-            $table->string('serial_no');
-            $table->string('amount_paid');
-
+            $table->string('name');
+            $table->integer('game_status');
 
             $table->integer('game_names_id')->unsigned();
             $table->foreign('game_names_id')
@@ -36,14 +33,18 @@ class CreateGameTransactionsTable extends Migration
                 ->references('id')
                 ->on('game_type_options');
 
+            $table->integer('game_quaters_id');
+            $table->foreign('game_quaters_id')
+                ->references('id')
+                ->on('game_quaters');
+
             $table->integer('users_id')->unsigned();
             $table->foreign('users_id')
                 ->references('id')
                 ->on('users');
 
-            $table->string('time_played');
-            $table->string('payment_option');
             $table->timestamps();
+
         });
     }
 
@@ -54,6 +55,6 @@ class CreateGameTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('game_transactions');
+        Schema::dropIfExists('games');
     }
 }

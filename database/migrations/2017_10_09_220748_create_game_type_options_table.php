@@ -17,10 +17,6 @@ class CreateGameTypeOptionsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('game_status');
-            $table->integer('game_types_id')->unsigned();
-            $table->foreign('game_types_id')
-                ->references('id')
-                ->on('game_types');
             $table->timestamps();
         });
     }

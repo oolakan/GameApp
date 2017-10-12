@@ -19,7 +19,18 @@ class CreateWinningsTable extends Migration
             $table->string('winning_date');
             $table->string('winning_time');
 
-            $table->integer('game_type_options_id')->unsigned();
+
+            $table->integer('game_names_id')->unsigned();
+            $table->foreign('game_names_id')
+                ->references('id')
+                ->on('game_names');
+
+            $table->integer('game_types_id')->unsigned();
+            $table->foreign('game_types_id')
+                ->references('id')
+                ->on('game_types');
+
+            $table->integer('game_type_options_id');
             $table->foreign('game_type_options_id')
                 ->references('id')
                 ->on('game_type_options');
@@ -28,6 +39,7 @@ class CreateWinningsTable extends Migration
             $table->foreign('users_id')
                 ->references('id')
                 ->on('users');
+
             $table->timestamps();
         });
     }

@@ -22,7 +22,7 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Admins</span>
-                        <span class="info-box-number">{{count($Users)}}</span>
+                        <span class="info-box-number">{{count($Admins)}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -33,21 +33,51 @@
                 <div class="info-box">
                     <span class="info-box-icon bg-aqua"><i class="ion ion-person"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">App Users</span>
-                        <span class="info-box-number">{{count($app_users)}}</span>
+                        <span class="info-box-text">Merchants</span>
+                        <span class="info-box-number">{{count($Merchants)}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
                 <!-- /.info-box -->
             </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="ion ion-person"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Agents</span>
+                        <span class="info-box-number">{{count($Agents)}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-red"><i class="fa fa-key"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Games</span>
+                        <span class="info-box-number">{{count($Games)}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+
+
+
             <!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box">
                     <span class="info-box-icon bg-red"><i class="fa fa-key"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">PIN</span>
-                        <span class="info-box-number">{{count($Pins)}}</span>
+                        <span class="info-box-text">Winnings</span>
+                        <span class="info-box-number">{{count($Winnings)}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -55,49 +85,7 @@
             </div>
             <!-- /.col -->
 
-            <!-- fix for small devices only -->
-            <div class="clearfix visible-sm-block"></div>
 
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-green"><i class="fa fa-book"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Course Materials</span>
-                        <span class="info-box-number">{{count($Materials)}}</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Course Codes</span>
-                        <span class="info-box-number">{{count($Codes)}}</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-
-
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Course Codes</span>
-                        <span class="info-box-number">{{count($Codes)}}</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
         </div>
         <!-- /.row -->
     <!-- /.control-sidebar -->

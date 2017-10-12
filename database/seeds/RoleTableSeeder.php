@@ -12,8 +12,10 @@ class RoleTableSeeder extends Seeder
     public function run()
     {
         \Illuminate\Support\Facades\DB::table('roles')->insert(
-            [[  'name'      =>  'Agent'],
-                ['name'     =>  'Merchant']
+            [
+                [  'name'      =>  'Admin'],
+                [  'name'      =>  'Merchant'],
+                [   'name'     =>  'Agent']
             ]);
     }
 }
