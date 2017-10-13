@@ -6,11 +6,13 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateWinningsTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
+
     public function up()
     {
         Schema::create('winnings', function (Blueprint $table) {
@@ -18,7 +20,6 @@ class CreateWinningsTable extends Migration
             $table->string('game_no');
             $table->string('winning_date');
             $table->string('winning_time');
-
 
             $table->integer('game_names_id')->unsigned();
             $table->foreign('game_names_id')
@@ -34,6 +35,11 @@ class CreateWinningsTable extends Migration
             $table->foreign('game_type_options_id')
                 ->references('id')
                 ->on('game_type_options');
+
+            $table->integer('game_quaters_id')->unsigned();
+            $table->foreign('game_quaters_id')
+                ->references('id')
+                ->on('game_quaters');
 
             $table->integer('users_id')->unsigned();
             $table->foreign('users_id')

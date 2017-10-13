@@ -4,10 +4,9 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Teacher Guide</title>
+    <title>LottoStars</title>
     @yield('header')
     <!-- Tell the browser to be responsive to screen width -->
-    <link rel="shortcut icon" href="{{asset('images/university_logo.png')}}" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
@@ -169,8 +168,8 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{url('/course/material')}}"><i class="fa fa-circle-o"></i>View Winnings</a></li>
-                        <li><a href="{{url('/course/material/create')}}"><i class="fa fa-circle-o"></i>Add New Winning Game</a></li>
+                        <li><a href="{{url('/winning')}}"><i class="fa fa-circle-o"></i>View Winnings</a></li>
+                        <li><a href="{{url('/winning/create')}}"><i class="fa fa-circle-o"></i>Add Winning Game</a></li>
                     </ul>
                 </li>
                 <li class="treeview">

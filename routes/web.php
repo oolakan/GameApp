@@ -81,3 +81,14 @@ Route::group(['prefix'  =>  'game'], function(){
     Route::post('/update/{id}', 'GameController@update')->middleware('auth');
     Route::post('/delete/{id}', 'GameController@destroy')->middleware('auth');
 });
+
+
+
+//Winnings
+Route::group(['prefix'  =>  'winning'], function(){
+    Route::get('/', 'WinningsController@index')->middleware('auth');
+    Route::get('/create', 'WinningsController@create')->middleware('auth');
+    Route::post('/store', 'WinningsController@store')->middleware('auth');
+    Route::post('/update/{id}', 'WinningsController@update')->middleware('auth');
+    Route::post('/delete/{id}', 'WinningsController@destroy')->middleware('auth');
+});
