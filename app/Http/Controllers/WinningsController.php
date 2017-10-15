@@ -31,13 +31,13 @@ class WinningsController extends Controller
             $Admins = User::with('role')->where('roles_id', '=', 1)->get();
             $Merchants = User::with('role')->where('roles_id', '=', 2)->get();
             $Agents = User::with('role')->where('roles_id', '=', 3)->get();
-            $Games = Game::all();
+            $Games = Game::with(['game_name', 'game_type', 'game_type_option', 'game_quater'])->get();
             $GameNames = GameName::all();
             $GameTypes = GameType::all();
             $GameTypeOptions = GameTypeOption::all();
             $GameQuaters = GameQuater::all();
             $Winnings = Winning::all();
-            return view('game.game_name.index', compact([
+            return view('winning.index', compact([
                 'Admins', 'Merchants', 'Agents',
                 'Games', 'GameNames', 'GameTypes', 'Winnings',
                 'GameQuaters', 'GameTypeOptions', 'Users']));

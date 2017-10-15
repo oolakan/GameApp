@@ -172,6 +172,19 @@
                         <li><a href="{{url('/winning/create')}}"><i class="fa fa-circle-o"></i>Add Winning Game</a></li>
                     </ul>
                 </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-key"></i>
+                        <span>Game Transactions</span>
+                        <span class="pull-right-container">
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{url('/transaction')}}"><i class="fa fa-circle-o"></i>View Report</a></li>
+                    </ul>
+                </li>
+
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-key"></i>

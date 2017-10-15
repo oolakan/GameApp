@@ -92,3 +92,9 @@ Route::group(['prefix'  =>  'winning'], function(){
     Route::post('/update/{id}', 'WinningsController@update')->middleware('auth');
     Route::post('/delete/{id}', 'WinningsController@destroy')->middleware('auth');
 });
+
+
+//Winnings
+Route::group(['prefix'  =>  'transaction'], function(){
+    Route::get('/', 'GameTransactionsController@index')->middleware('auth');
+});

@@ -42,7 +42,8 @@ class CreateGameTransactionsTable extends Migration
                 ->on('users');
 
             $table->string('time_played');
-            $table->string('payment_option');
+            $table->string('payment_option'); //CASH OR CARD
+            $table->integer('status'); // 0=>PENDING, 1=>LOOSE, 2=> WON
             $table->timestamps();
         });
     }

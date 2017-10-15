@@ -59,15 +59,14 @@
                 <div class="info-box">
                     <span class="info-box-icon bg-red"><i class="fa fa-key"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Games</span>
-                        <span class="info-box-number">{{count($Games)}}</span>
+                        <span class="info-box-text">Game Transactions</span>
+                        <span class="info-box-number">{{count($Transactions)}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
                 <!-- /.info-box -->
             </div>
             <!-- /.col -->
-
 
 
             <!-- /.col -->

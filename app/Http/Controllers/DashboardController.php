@@ -6,6 +6,7 @@ use App\AppUser;
 use App\CourseCode;
 use App\CourseMaterial;
 use App\Game;
+use App\GameTransaction;
 use App\Pin;
 use App\Role;
 use App\User;
@@ -33,8 +34,9 @@ class DashboardController extends Controller
         $Merchants = User::with(['role'])->where('roles_id', '=', 2)->get();
         $Agents = User::with(['role'])->where('roles_id', '=', 3)->get();
         $Games = Game::all();
+        $Transactions       = GameTransaction::all();
         $Winnings = Winning::all();
-        return view('dashboard.index', compact(['Admins', 'Merchants', 'Agents', 'Games', 'Winnings', 'Users']));
+        return view('dashboard.index', compact(['Admins', 'Merchants', 'Agents', 'Games', 'Transactions', 'Winnings', 'Users']));
     }
     /**
      * Show the form for creating a new resource.
