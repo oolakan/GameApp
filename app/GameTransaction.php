@@ -14,7 +14,8 @@ class GameTransaction extends Model
         'game_type_options_id',
         'users_id',
         'time_played',
-        'payment_option'
+        'payment_option',
+        'status',
     ];
 
 
