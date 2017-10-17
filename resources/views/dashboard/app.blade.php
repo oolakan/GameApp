@@ -9,8 +9,6 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
-    <link rel="stylesheet" href="{{asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -21,7 +19,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
-    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}">
 
 </head>
 <body class="hold-transition skin-yellow sidebar-mini">
@@ -228,9 +226,13 @@
     <script src="{{asset('plugins/fastclick/fastclick.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('dist/js/app.min.js')}}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="{{asset('dist/js/demo.js')}}"></script>
+    <script src="{{asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
+    <script src="{{asset('plugins/select2/select2.full.min.js')}}"></script>
+    <script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
     <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
-
     <script>
         jQuery(document).ready(function($){
             $('#confirmDelete').on('show.bs.modal', function (e) {
@@ -240,16 +242,14 @@
                 $(this).find('.modal-title').text($title);
 
                 // Pass form reference to modal for submission on yes/ok
+                var form = $(e.relatedTarget).closest('form');
                 $(this).find('.modal-footer #confirm').data('form', form);
             });
             <!-- Form confirm (yes/ok) handler, submits form -->
             $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
                 $(this).data('form').submit();
             });
-
-            $('form#formsubmit').submit(function(){
-                $('#submitbutton').text('Uploading...');
-            });
+            $('#example1').DataTable();
 
         });
 
@@ -257,6 +257,7 @@
 </div>
 
 @yield('footer')
+
 
 </body>
 </html>

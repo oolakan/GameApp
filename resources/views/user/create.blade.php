@@ -1,8 +1,4 @@
 @extends('dashboard.app')
-@section('header')
-    <!-- DataTables -->
-    <link rel="stylesheet" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}">
-@stop
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -69,15 +65,3 @@
         </section>
 
 @endsection
-
-
-@section('footer')
-    <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
-    <!-- page script -->
-    <script>
-        $(function () {
-            $('#example1').DataTable();
-        });
-    </script>
-@stop

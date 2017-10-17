@@ -1,20 +1,5 @@
 @extends('dashboard.app')
-@section('header')
-    <!-- DataTables -->
-       <link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
-    <link rel="stylesheet" href="{{asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
-    <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
-    <link rel="stylesheet" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}">
-@stop
+
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -90,24 +75,3 @@
     @include('winning.create')
     @include('delete_confirm.delete_confirm')
 @endsection
-
-
-@section('footer')
- <script src="{{asset('plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
-    <!-- Bootstrap 3.3.6 -->
-    <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
-    <!-- SlimScroll -->
-    <script src="{{asset('plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
-    <!-- FastClick -->
-    <script src="{{asset('plugins/fastclick/fastclick.js')}}"></script>
-    <!-- AdminLTE App -->
-    <script src="{{asset('dist/js/app.min.js')}}"></script>
-    <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
-    <!-- page script -->
-    <script>
-        $(function () {
-            $('#example1').DataTable();
-        });
-    </script>
-@stop
