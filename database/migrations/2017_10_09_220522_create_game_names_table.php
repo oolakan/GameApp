@@ -14,10 +14,22 @@ class CreateGameNamesTable extends Migration
     public function up()
     {
         Schema::create('game_names', function (Blueprint $table) {
+
             $table->increments('id');
             $table->string('name');
+
+            $table->integer('days_id')->unsigned();
+            $table->foreign('days_id')->references('id')->on('days');
+
+            $table->integer('game_quaters_id')->unsigned();
+            $table->foreign('game_quaters_id')->references('id')->on('game_quaters');
+
+            $table->string('start_time');
+            $table->string('stop_time');
+            $table->string('draw_time');
             $table->integer('game_status');
             $table->timestamps();
+
         });
     }
 
