@@ -11,8 +11,46 @@
                     <table class="table table-stripped">
                         <tr>
                             <th width="40%">Name</th>
-                            <td width="60%"><input name="name" type="text" value="{{$game->name}}" class="form-control" placeholder="Name" required="" style="width: 80%"></td>
+                            <td><input type="text" name="name" value="{{$game->name}}" id="name" class="form-control"></td>
                         </tr>
+
+                        <tr>
+                            <th width="40%">Day</th>
+                            <td>   <select name="days_id" required="" class="form-control">
+                                    <option value="">Select Day</option>
+                                    @foreach($Days as $day)
+                                        <option value="{{$day->id}}" @if ($day->id == $game->day->id) selected @endif>{{$day->name}}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th width="40%">Game Quater</th>
+                            <td>   <select name="game_quaters_id" required="" class="form-control">
+                                    <option value="">Select Quater</option>
+                                    @foreach($GameQuaters as $quater)
+                                        <option value="{{$quater->id}}" @if ($quater->id == $game->quater->id) selected @endif>{{$quater->name}}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th width="40%">Start time</th>
+                            <td><input type="time" name="start_time" value="{{$game->start_time}}" id="name" class="form-control"></td>
+                        </tr>
+
+                        <tr>
+                            <th width="40%">Stop time</th>
+                            <td><input type="time" name="stop_time" value="{{$game->stop_time}}" id="name" class="form-control"></td>
+                        </tr>
+
+                        <tr>
+                            <th width="40%">Draw time</th>
+                            <td><input type="time" name="draw_time" value="{{$game->draw_time}}" id="name" class="form-control"></td>
+                        </tr>
+
 
                     </table>
                     <div class="modal-footer clearfix">

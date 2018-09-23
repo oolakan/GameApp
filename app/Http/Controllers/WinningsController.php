@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 
 use App\Credit;
+use App\Day;
 use App\Game;
 use App\GameName;
 use App\GameQuater;
+use App\GameTransaction;
 use App\GameType;
 use App\GameTypeOption;
 use App\Role;
@@ -24,6 +26,14 @@ class WinningsController extends Controller
      * @return \Illuminate\Http\Response
      */
     private $APPROVED   =   'APPROVED';
+    private $WON = 'WON';
+    private $LOOSE = 'LOOSE';
+    private $status;
+    private $message;
+    private $Transaction;
+    private $result;
+    private $match_no_count;
+    private $winning_amount;
     public function index()
     {
         try {
@@ -32,11 +42,11 @@ class WinningsController extends Controller
             $Merchants = User::with('role')->where('roles_id', '=', 2)->get();
             $Agents = User::with('role')->where('roles_id', '=', 3)->get();
             $Games = Game::with(['game_name', 'game_type', 'game_type_option', 'game_quater'])->get();
-            $GameNames = GameName::all();
+            $GameNames = GameName::with(['day'])->get();
             $GameTypes = GameType::all();
             $GameTypeOptions = GameTypeOption::all();
             $GameQuaters = GameQuater::all();
-            $Winnings = Winning::all();
+            $Winnings = Winning::with(['game_name'])->orderBy('winning_date','asc')->get();
             return view('winning.index', compact([
                 'Admins', 'Merchants', 'Agents',
                 'Games', 'GameNames', 'GameTypes', 'Winnings',
@@ -81,13 +91,10 @@ class WinningsController extends Controller
     {
         try{
             $rules = [
-                'game_no' => 'required',
+                'winning_no' => 'required',
+                'machine_no' => 'required',
                 'winning_date' => 'required',
-                'winning_time' => 'required',
                 'game_names_id' => 'required',
-                'game_types_id' => 'required',
-                'game_type_options_id' => 'required',
-                'game_quaters_id' => 'required',
             ];
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
@@ -146,6 +153,202 @@ class WinningsController extends Controller
         catch(\ErrorException $ex){
             $ex->getMessage();
         }
+    }
+
+    public function activateWinning($id) {
+        try{
+            $Winning = Winning::with(['game_name'])->find(base64_decode($id));
+            $winningNumber = $Winning->winning_no;
+            $gameNameId    = $Winning->game_names_id;
+            $gameQuaterId   = $Winning->game_name->game_quaters_id;
+            $winningDate   = $Winning->winning_date;
+            $winningTime     = $Winning->winning_time;
+            $gameName = $Winning->game_name->name;
+
+            $winningNoArr = explode(',', $winningNumber);
+
+            $Transactions = GameTransaction::where('game_names_id', '=', $gameNameId)
+                ->where('game_quaters_id', '=', $gameQuaterId)
+                ->where('date_played', '=', $winningDate)
+                ->get();
+
+            if (count($Transactions) > 0) {
+                foreach ($Transactions as $transaction) {
+                    $gameNameId = $transaction->game_names_id;
+                    $datePlayed = $transaction->date_played;
+                    $gameNoPlayed = $transaction->game_no_played;
+                    $gameNoArr = explode(',', $gameNoPlayed);
+
+                    $bankerNo = $transaction->banker_no;
+                    $bankerNoArr = [];
+                    if (strpos( $bankerNo, ",") !== false) {
+                        $bankerNoArr = explode(',', $bankerNo);
+                    } else {
+                        array_push($bankerNoArr, $bankerNo);
+                    }
+                    // get winning number
+                    $Winning = Winning::where('game_names_id', '=', $gameNameId)
+                        ->where('winning_date', '=', $datePlayed)
+                        ->first();
+
+                    if (!$Winning) {
+                        $this->status = 402;
+                        $this->message = 'No winning game has been registered for this game';
+                        return response(array('status' => $this->status, 'message' => $this->message));
+                    }
+                    // explode winning number
+                    $winningNumber = $Winning->winning_no;
+                    $winningNoArr = explode(',', $winningNumber);
+
+                    // get match numbers
+                    $this->Transaction = GameTransaction::with(['game_name', 'game_type', 'game_type_option'])->find($transaction->id);
+                    $gameOptionId = $this->Transaction->game_type_options_id;
+                    $gameTypeId = $this->Transaction->game_types_id;
+                    $unitStake = $this->Transaction->unit_stake;
+                    //CHECK IF GAME TYPE IS AGAINST
+                    // check if banker number is in winning number
+                    if ($gameTypeId == '2') {
+                        if ($this->isBankerInWinningNo($winningNoArr, $bankerNoArr, $gameOptionId)) {
+                            $this->result = array_intersect($winningNoArr, $gameNoArr);
+                            $this->match_no_count = count($this->result) * count($bankerNoArr);
+                            $this->Transaction->no_of_matched_figures = $this->match_no_count;
+                            $this->winning_amount = $this->winningAmount($this->Transaction->game_types_id, $this->Transaction->game_type_options_id, $this->match_no_count, $unitStake);
+                        } else {
+                            $this->winning_amount = 0;
+                        }
+                    } else {
+                        $this->result = array_intersect($winningNoArr, $gameNoArr);
+                        $this->match_no_count = count($this->result);
+                        $this->Transaction->no_of_matched_figures = $this->match_no_count;
+                        $this->winning_amount = $this->winningAmount($this->Transaction->game_types_id, $this->Transaction->game_type_options_id, $this->match_no_count, $unitStake);
+                    }
+                    $this->Transaction->winning_amount = $this->winning_amount;
+                    if ($this->winning_amount < 1) {
+                        $this->Transaction->status = $this->LOOSE;
+                    } else {
+                        $this->Transaction->status = $this->WON;
+                    }
+                    $this->Transaction->save();
+                }
+                if ($this->Transaction) {
+                    flash()->success('Winning games activated');
+                    return redirect()->action('WinningsController@index');
+                }
+            }
+            else {
+                flash()->error('No '. $gameName.' game was played prior to this period');
+                return redirect()->action('WinningsController@index');
+            }
+        }
+        catch (\ErrorException $e) {
+            flash()->error('Error occured');
+            return redirect()->action('WinningsController@index');
+        }
+    }
+
+    /**
+     * @param $winningNo
+     * @param $bankerNo
+     * @param $oid
+     * @return bool
+     * Check if banker number is in winning number
+     */
+    public function isBankerInWinningNo($winningNo, $bankerNo, $oid) {
+        $result         =   array_intersect($winningNo, $bankerNo);
+        $match_no_count = count($result);
+        if ($oid == 5){
+            if ($match_no_count == 1)
+                return true;
+        }//AGAINST 1
+        else if ($oid == 6){
+            if ($match_no_count == 2)
+                return true;
+        }// AGAINST 2
+        else if ($oid == 7) {
+            if ($match_no_count == 3)
+                return true;
+        }// AGAINST 3
+        else if ($oid == 8){
+            if ($match_no_count == 4)
+                return true;
+        }// AGAISNT 4
+        else if ($oid == 9){
+            if ($match_no_count == 5)
+                return true;
+        }// AGAINST 5
+        return false;
+    }
+
+    /**
+     * @param $tid
+     * @param $oid
+     * @param $noOfMatchedFigures
+     * @param $unitStake
+     * @return float|int
+     * get winning amount
+     */
+
+    public function winningAmount($tid, $oid, $noOfMatchedFigures, $unitStake) {
+        $amount = 0.0;
+        if ($tid == 1) {
+            if ($oid == 1){
+                $amount = (($noOfMatchedFigures * ($noOfMatchedFigures - 1)) / 2) * (240 * $unitStake);
+                return $amount;
+            }//PERM 2
+            else if ($oid == 2){
+                $amount = (240 * $unitStake) * ($noOfMatchedFigures) * ($noOfMatchedFigures - 1) * ($noOfMatchedFigures -2)/6;
+                return $amount;
+            }// PERM 3
+            else if ($oid == 3) {
+                $amount = (240 * $unitStake) * ($noOfMatchedFigures) * ($noOfMatchedFigures - 1) * ($noOfMatchedFigures - 2) * ($noOfMatchedFigures - 3)/24;
+                return $amount;
+            }// PERM 4
+            else if ($oid == 4){
+                $amount = (240 * $unitStake) * ($noOfMatchedFigures) * ($noOfMatchedFigures - 1) * ($noOfMatchedFigures - 2) * ($noOfMatchedFigures - 3) * ($noOfMatchedFigures - 4)/120;
+                return $amount;
+            }// PERM 5
+        }// PERM
+        else if ($tid == 2) {
+            if ($oid == 5) {
+                $amount = 1 * 4 * $unitStake  * 240;
+                return $amount;
+            } //AGAINST 1
+            else if ($oid == 6){
+                $amount = 2 * 3 * $unitStake  * 240;
+                return $amount;
+            } // AGAINST 2
+            else if ($oid == 7) {
+                $amount = 3 * 2 * $unitStake  * 240;
+                return $amount;
+            } // AGAINST 3
+            else if ($oid == 8){
+                $amount = 4 * 1 * $unitStake * 240;
+                return $amount;
+            } // AGAISNT 4
+            else if ($oid == 9){
+                $amount = 5 * $unitStake * 240;
+                return $amount;
+            } // AGAINST 5
+        }// AGAIANST
+        else if ($tid == 3) {
+            if ($oid == 10){
+                $amount = (240 * $unitStake * $noOfMatchedFigures) / $noOfMatchedFigures;
+                return $amount;
+            }//DIRECT 2
+            else if ($oid == 11){
+                $amount = (2100 * $unitStake * $noOfMatchedFigures) / $noOfMatchedFigures;
+                return $amount;
+            }// DIRECT 3
+            else if ($oid == 12) {
+                $amount = (2100 * $unitStake * $noOfMatchedFigures) / $noOfMatchedFigures;
+                return $amount;
+            }// DIRECT 4
+            else if ($oid == 13){
+                $amount = (2100 * $unitStake * $noOfMatchedFigures) / $noOfMatchedFigures;
+                return $amount;
+            }// DIRECT 5
+        }//DIRECT
+        return $amount;
     }
 
     /**

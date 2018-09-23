@@ -16,10 +16,13 @@ class CreateGameTransactionsTable extends Migration
         Schema::create('game_transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('game_no_played');
+            $table->string('banker_no');
+            $table->string('no_of_matched_figures');
             $table->string('ticket_id');
             $table->string('serial_no');
-            $table->string('amount_paid');
-
+            $table->integer('unit_stake');
+            $table->double('total_amount');
+            $table->double('winning_amount');
 
             $table->integer('game_names_id')->unsigned();
             $table->foreign('game_names_id')
@@ -36,14 +39,23 @@ class CreateGameTransactionsTable extends Migration
                 ->references('id')
                 ->on('game_type_options');
 
+            $table->integer('game_quaters_id')->unsigned();
+            $table->foreign('game_quaters_id')
+                ->references('id')
+                ->on('game_quaters');
+
             $table->integer('users_id')->unsigned();
             $table->foreign('users_id')
                 ->references('id')
                 ->on('users');
 
-            $table->string('time_played');
+            $table->date('date_played');
+            $table->time('time_played');
+
             $table->string('payment_option'); //CASH OR CARD
-            $table->integer('status'); // 0=>PENDING, 1=>LOOSE, 2=> WON
+            $table->string('status'); // 0=>PENDING, 1=>LOOSE, 2=> WON
+            $table->string('draw_type'); //WINNING_GAME OR MACHINE_GAME
+
             $table->timestamps();
         });
     }

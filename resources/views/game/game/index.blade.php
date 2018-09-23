@@ -31,11 +31,10 @@
                             <thead>
                             <tr>
                                 <th>Game Name</th>
-                                <th>Game Type</th>
-                                <th>Game Option</th>
                                 <th>Game Quater</th>
                                 <th>Start Time</th>
                                 <th>Stop Time</th>
+                                <th>Draw Time</th>
                                 <th>Status</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
@@ -46,11 +45,10 @@
                                 <tr>
 
                                     <td>{{$game->game_name->name}}</td>
-                                    <td>{{$game->game_type->name}}</td>
-                                    <td>{{$game->game_type_option->name}}</td>
                                     <td>{{$game->game_quater->name}}</td>
                                     <td>{{$game->start_time}}</td>
                                     <td>{{$game->stop_time}}</td>
+                                    <td>{{$game->draw_time}}</td>
                                     <td>@if( $game->game_status == 0 ) OPENED @else CLOSED @endif</td>
 
                                     <td><a class="btn btn-primary" data-toggle="modal" data-target="#edit-{{$game->id}}"><i class="fa fa-pencil"></i> Edit</a>

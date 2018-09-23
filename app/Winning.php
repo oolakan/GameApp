@@ -7,13 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Winning extends Model
 {
     protected $fillable = [
-        'game_no',
+        'winning_no',
+        'machine_no',
         'winning_date',
         'winning_time',
         'game_names_id',
-        'game_types_id',
-        'game_type_options_id',
-        'game_quaters_id',
         'users_id'
     ];
 

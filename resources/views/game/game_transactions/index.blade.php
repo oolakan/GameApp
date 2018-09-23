@@ -27,11 +27,16 @@
                             <thead>
                             <tr>
                                 <th>Ticket Id</th>
+                                <th>Serial no.</th>
                                 <th>Game Name</th>
+                                <th>Draw Type</th>
                                 <th>Game Option</th>
-                                <th>Game Quater</th>
                                 <th>Date Played</th>
                                 <th>Time Played</th>
+                                <th>Status</th>
+                                <th>Matched Numbers</th>
+                                <th>Winning Amount</th>
+                                <th>Validate Ticket</th>
                                 <th>View Info</th>
 
                             </tr>
@@ -41,13 +46,28 @@
                                 <tr>
 
                                     <td>{{$transaction->ticket_id}}</td>
+                                    <td>{{$transaction->serial_no}}</td>
                                     <td>{{$transaction->game_name->name}}</td>
-                                    <td>{{$transaction->game_type->name}}</td>
+                                    <td>{{$transaction->draw_type}}</td>
                                     <td>{{$transaction->game_type_option->name}}</td>
-                                    <td>{{$transaction->game_quater->name}}</td>
-                                    <td>{{$transaction->created_at}}</td>
+                                    <td>{{$transaction->date_played}}</td>
                                     <td>{{$transaction->time_played}}</td>
-                                    <td><a class="btn btn-primary" data-toggle="modal" data-target="#view-{{$winning->id}}"><i class="fa fa-pencil"></i> View </a>
+                                    <td>{{$transaction->status}}</td>
+                                    <td>{{$transaction->no_of_matched_figures}}</td>
+                                    <td>{{$transaction->winning_amount}}</td>
+
+                                    <td>
+                                        <form method="GET" action="{{url('/winning/activate/one/'.base64_encode($transaction->id))}}" accept-charset="UTF-8" style="display:inline">
+                                            <button class="btn btn-info" type="button" data-toggle="modal" data-target="#confirmValidate" data-title="Validate game number played" data-message="Are you sure you want to validate this game number?">
+                                                <i class="glyphicon glyphicon-arrow-up"></i> Validate
+                                            </button>
+                                        </form>
+                                    </td>
+
+                                    </td>
+                                    <td><a class="btn btn-primary" data-toggle="modal" data-target="#view-{{$transaction->id}}"><i class="glyphicon glyphicon-view"></i> View Game</a>
+                                    @include('game.game_transactions.view')
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -57,6 +77,5 @@
             </div>
         </div>
     </section>
-    @include('winning.create')
-    @include('delete_confirm.delete_confirm')
 @endsection
+@include('delete_confirm.delete_confirm')

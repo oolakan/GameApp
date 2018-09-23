@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\AppUser;
 use App\CourseCode;
 use App\CourseMaterial;
+use App\Day;
 use App\Game;
+use App\GameName;
 use App\GameTransaction;
 use App\Pin;
 use App\Role;
@@ -29,6 +31,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $today = date('l');
         $Users  =   User::all();
         $Admins = User::with(['role'])->where('roles_id', '=', 1)->get();
         $Merchants = User::with(['role'])->where('roles_id', '=', 2)->get();
@@ -36,7 +39,12 @@ class DashboardController extends Controller
         $Games = Game::all();
         $Transactions       = GameTransaction::all();
         $Winnings = Winning::all();
-        return view('dashboard.index', compact(['Admins', 'Merchants', 'Agents', 'Games', 'Transactions', 'Winnings', 'Users']));
+        $dayOfWeek      =   Day::where('name', '=', $today)->first();
+        $dayOfWeekId    =   $dayOfWeek->id;
+        $GamesOfDay    =   GameName::where('days_id', '=', $dayOfWeekId)->get();
+        return view('dashboard.index', compact(['Admins', 'Merchants', 'Agents',
+            'Games', 'Transactions', 'Winnings',
+            'Users', 'GamesOfDay']));
     }
     /**
      * Show the form for creating a new resource.

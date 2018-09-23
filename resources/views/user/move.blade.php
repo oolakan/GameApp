@@ -1,36 +1,36 @@
-<div class="modal fade" id="edit-{{$user->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="move-{{$user->id}}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-user"></i>MODIFY ADMIN INFO</h4>
+                <h4 class="modal-title"><i class="fa fa-user"></i>REASSIGN AGENT A NEW MERCHANT</h4>
             </div>
-            <form action="{{url('/credit/storeOrUpdate/'.base64_encode($user->id))}}" method="post">
+            <form action="{{url('/users/move/'.base64_encode($user->id))}}" method="post">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <table class="table table-stripped">
                         <tr>
-                            <th width="40%">Name</th>
+                            <th width="40%">Agent Name</th>
                             <td width="60%"><input name="name" type="text" value="{{$user->name}}" class="form-control" placeholder="Name" required="" style="width: 80%"></td>
                         </tr>
                         <tr>
-                            <th>Email</th>
-                            <td> <input name="email" type="text" value="{{$user->email}}" class="form-control" placeholder="Email" required="" style="width: 80%"></td>
+                            <th width="40%">Agent Email</th>
+                            <td width="60%"> <input name="email" type="text" value="{{$user->email}}" class="form-control" placeholder="Email" required="" style="width: 80%"></td>
                         </tr>
                         <tr>
-                            <th>Phone</th>
-                            <td> <input name="phone" type="text" value="{{$user->phone}}" class="form-control" placeholder="Phone" required="" style="width: 80%"></td>
+                            <th width="40%">Phone</th>
+                            <td width="60%"> <input name="phone" type="text" value="{{$user->phone}}" class="form-control" placeholder="Phone" required="" style="width: 80%"></td>
                         </tr>
-                        {{--<tr>--}}
-                            {{--<th>Role</th>--}}
-                            {{--<td> <select name="roles_id" required="" class="form-control" style="width: 80%">--}}
-                                    {{--<option value="">Select Role</option>--}}
-                                    {{--@foreach($Roles as $role)--}}
-                                        {{--<option value="{{$role->id}}" @if($role->id == $user->role->id) selected @endif>{{$role->name}}</option>--}}
-                                    {{--@endforeach--}}
-                                {{--</select>--}}
-                            {{--</td>--}}
-                        {{--</tr>--}}
+                        <tr>
+                            <th width="40%">Select new merchant</th>
+                            <td><select name="merchants_id" required="" class="form-control" style="width: 80%">
+                                    <option value="">Assign Merchant</option>
+                                    @foreach($Merchants as $merchant)
+                                        <option value="{{$merchant->id}}">{{$merchant->name}}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                        </tr>
                     </table>
                     <div class="modal-footer clearfix">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-user"></i> Update</button>

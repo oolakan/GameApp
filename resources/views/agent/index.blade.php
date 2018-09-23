@@ -28,26 +28,24 @@
                             <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Email</th>
-                                <th>Mobile</th>
-                                <th>Role</th>
+                                <th>Credit Balance</th>
+                                <th>Ticket Id</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($Users as $user)
+                            @foreach($MerchantAgents as $user)
                                 <tr>
                                     <td>{{$user->name}}</td>
-                                    <td>{{$user->email}}</td>
-                                    <td>{{$user->phone}}</td>
-                                    <td>{{$user->role->name}}</td>
-                                    <td><a class="btn btn-primary" data-toggle="modal" data-target="#edit-{{$user->id}}"><i class="fa fa-pencil"></i> Edit</a>
+                                    <td>{{$user->credit_balance}}</td>
+                                    <td>{{$user->ticket_id}}</td>
+                                    <td><a class="btn btn-primary" data-toggle="modal" data-target="#edit-{{$user->users_id}}"><i class="fa fa-pencil"></i> Edit</a>
                                         <!-- Edit form-->
                                         @include('user.edit')
                                     </td>
                                     <td>
-                                        <form method="GET" action="{{url('/users/delete/'.base64_encode($user->id))}}" accept-charset="UTF-8" style="display:inline">
+                                        <form method="GET" action="{{url('/users/delete/'.base64_encode($user->users_id))}}" accept-charset="UTF-8" style="display:inline">
                                             <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete User" data-message="Are you sure you want to delete this user ?">
                                                 <i class="glyphicon glyphicon-trash"></i> Delete
                                             </button>

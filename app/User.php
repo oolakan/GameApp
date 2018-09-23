@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'location', 'approval_status', 'password','api_token', 'approval_status'
+        'name', 'email', 'phone', 'location', 'approval_status', 'ticket_id', 'password','api_token', 'approval_status'
     ];
 
     /**
@@ -42,4 +42,6 @@ class User extends Authenticatable
     public function credit() {
         return $this->hasOne(Credit::class, 'users_id', 'id');
     }
+
+
 }

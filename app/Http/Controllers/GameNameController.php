@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Credit;
+use App\Day;
 use App\Game;
 use App\GameName;
 use App\GameQuater;
@@ -33,15 +34,16 @@ class GameNameController extends Controller
             $Merchants = User::with('role')->where('roles_id', '=', 2)->get();
             $Agents = User::with('role')->where('roles_id', '=', 3)->get();
             $Games = Game::all();
-            $GameNames = GameName::all();
+            $GameNames = GameName::with('day')->get();
             $GameTypes = GameType::all();
             $GameTypeOptions = GameTypeOption::all();
             $GameQuaters = GameQuater::all();
             $Winnings = Winning::all();
+            $Days       =   Day::all();
             return view('game.game_name.index', compact([
                 'Admins', 'Merchants', 'Agents',
                 'Games', 'GameNames', 'GameTypes', 'Winnings',
-                'GameQuaters', 'GameTypeOptions', 'Users']));
+                'GameQuaters', 'GameTypeOptions', 'Users', 'Days']));
         }catch (\ErrorException $ex){
             $ex->getMessage();
         }
@@ -55,8 +57,12 @@ class GameNameController extends Controller
     {
         try{
             $rules = [
-                'name' => 'required',
-            ];
+                'name' => 'required|unique:game_names',
+                'start_time' => 'required',
+                'stop_time' => 'required',
+                'draw_time' => 'required',
+                'game_quaters_id' => 'required'
+             ];
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
                 return back()
@@ -64,9 +70,7 @@ class GameNameController extends Controller
                     ->withErrors($validator);
             }
             $Game                 =   new GameName();
-            $Game->updateOrCreate(['name' => $request->name],
-                [   'name' => $request->name,
-                ]);
+            $Game->create($request->all());
             if($Game) {
                 flash()->success('Game name created successfully');
                 return redirect()->action('GameNameController@index');
@@ -88,6 +92,10 @@ class GameNameController extends Controller
         try{
             $rules = [
                 'name' => 'required',
+                'start_time' => 'required',
+                'stop_time' => 'required',
+                'draw_time' => 'required',
+                'game_quaters_id' => 'required',
             ];
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
@@ -96,7 +104,7 @@ class GameNameController extends Controller
                     ->withErrors($validator);
             }
             $Game                   =   GameName::find(base64_decode($id));
-            $Game->name             =   $request->name;
+            $Game->update($request->all());
             $Game->save();
             if($Game){
                 flash()->success('Game name updated successfully');

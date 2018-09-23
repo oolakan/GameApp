@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box">
-                    <span class="info-box-icon bg-aqua"><i class="ion ion-person"></i></span>
+                    <span class="info-box-icon bg-green"><i class="ion ion-person"></i></span>
 
                     <div class="info-box-content">
                         <span class="info-box-text">Admins</span>
@@ -31,7 +31,7 @@
 
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box">
-                    <span class="info-box-icon bg-aqua"><i class="ion ion-person"></i></span>
+                    <span class="info-box-icon bg-yellow"><i class="ion ion-person"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Merchants</span>
                         <span class="info-box-number">{{count($Merchants)}}</span>
@@ -68,25 +68,48 @@
             </div>
             <!-- /.col -->
 
-
-            <!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-red"><i class="fa fa-key"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Winnings</span>
-                        <span class="info-box-number">{{count($Winnings)}}</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-
-
         </div>
         <!-- /.row -->
+
+
+
+        <div class="row">
+            @if(count($GamesOfDay) > 0)
+                <div class="content-header">
+                    <h1>Game of the day</h1>
+                </div>
+            @endif
+            <br>
+            @foreach($GamesOfDay as $gamesOfDay)
+            <div class="col-md-3">
+                <div class="box box-success box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{$gamesOfDay->name}}</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body" style="display: block;">
+                        Start time: {{strtoupper(date('h:i a', strtotime($gamesOfDay->start_time)))}}<br>
+                        Stop time: {{strtoupper(date('h:i a', strtotime($gamesOfDay->stop_time)))}}<br>
+                        Draw time: {{strtoupper(date('h:i a', strtotime($gamesOfDay->draw_time)))}}<br>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+                @endforeach
+
+        </div>
+
+
+
+    </section>
+
+
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->

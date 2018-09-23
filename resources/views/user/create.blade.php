@@ -1,17 +1,12 @@
 @extends('dashboard.app')
-
 @section('content')
     <!-- Content Wrapper. Contains page content -->
-
-    <!-- Content Header (Page header) -->
-
-
     <section class="content">
     <div class="col-xs-6">
     <div class="register-box-body">
-        <p class=""><h1>Add New User</h1></p>
+        <p class=""><h1>Add New sUser</h1></p>
         @include('partials.flash_message')
-        <form action="{{url('/users/store')}}" method="post">
+        <form action="{{url('/users/store')}}" novalidate method="post" >
             {{ csrf_field() }}
             <div class="form-group has-feedback">
                 <input type="text" name="name" class="form-control" placeholder="Full name" required="" value="{{old('name')}}">
@@ -30,14 +25,23 @@
                 <span class="glyphicon glyphicon-map-marker form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <select name="roles_id" required="" class="form-control">
+                <select name="roles_id" required="" class="form-control" id="role">
                     <option value="">Select Role</option>
                     @foreach($Roles as $role)
                         <option value="{{$role->id}}">{{$role->name}}</option>
                     @endforeach
                 </select>
-
             </div>
+
+            <div class="form-group has-feedback" id="merchant">
+                <select name="merchants_id" required="" class="form-control">
+                    <option value="">Assign Merchant</option>
+                    @foreach($Merchants as $merchant)
+                        <option value="{{$merchant->id}}">{{$merchant->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+
             <div class="form-group has-feedback">
                 <input type="password"  name="password" class="form-control" placeholder="Password">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>

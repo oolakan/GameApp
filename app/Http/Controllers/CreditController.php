@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Agent;
 use App\Credit;
 use App\Game;
 use App\Role;
@@ -17,6 +18,8 @@ class CreditController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $Credit;
+    private $user_credit_id;
 
     public function index()
     {
@@ -49,13 +52,30 @@ class CreditController extends Controller
                     ->withInput()
                     ->withErrors($validator);
             }
-            $Credit                 =   new Credit();
-            $Credit->updateOrCreate(['users_id' => $request->users_id],
-                [   'amount' => $request->amount,
-                    'funded_by' => Auth::user()->id,
-                    'users_id' => $request->users_id
-                ]);
-            if($Credit){
+
+
+            $_Credit = Credit::where('users_id', '=', $request->users_id)->first();
+            if ($_Credit) {
+                $this->user_credit_id = $_Credit->id;
+                $this->Credit = Credit::find($this->user_credit_id);
+                $this->Credit->amount = $request->amount + $_Credit->amount;
+            } else {
+                $this->Credit = new Credit();
+                $this->Credit->amount = $request->amount;
+            }
+
+            $this->Credit->funded_by = Auth::user()->id;
+            $this->Credit->users_id = $request->users_id;
+            $this->Credit->save();
+
+            $_Agent =   Agent::where('users_id', '=',  $request->users_id)->first();
+            if($_Agent) {
+                $Agent = Agent::find($_Agent->id);
+                $Agent->credit_balance = $request->amount + $_Agent->credit_balance;
+                $Agent->save();
+            }
+
+            if($this->Credit){
                 flash()->success('Credit balance updated successfully');
                 return redirect()->action('CreditController@index');
             }

@@ -30,13 +30,12 @@
                                 </div></caption>
                             <thead>
                             <tr>
-                                <th>Game No</th>
+                                <th>Winning No</th>
+                                <th>Machine No</th>
                                 <th>Game Name</th>
-                                <th>Game Type</th>
-                                <th>Game Option</th>
-                                <th>Game Quater</th>
                                 <th>Winning Date</th>
                                 <th>Winning Time</th>
+                                <th>Activate on Games</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
@@ -45,13 +44,18 @@
                             @foreach($Winnings as $winning)
                                 <tr>
 
-                                    <td>{{$winning->game_no}}</td>
+                                    <td>{{$winning->winning_no}}</td>
+                                    <td>{{$winning->machine_no}}</td>
                                     <td>{{$winning->game_name->name}}</td>
-                                    <td>{{$winning->game_type->name}}</td>
-                                    <td>{{$winning->game_type_option->name}}</td>
-                                    <td>{{$winning->game_quater->name}}</td>
                                     <td>{{$winning->winning_date}}</td>
                                     <td>{{$winning->winning_time}}</td>
+                                    <td>
+                                        <form method="GET" action="{{url('/winning/activate/'.base64_encode($winning->id))}}" accept-charset="UTF-8" style="display:inline">
+                                            <button class="btn btn-info" type="button" data-toggle="modal" data-target="#confirmValidate" data-title="Activate winning number on games" data-message="Are you sure you want to activate this winning information to games?">
+                                                <i class="glyphicon glyphicon-arrow-up"></i> Validate Games for the day
+                                            </button>
+                                        </form>
+                                    </td>
                                     <td><a class="btn btn-primary" data-toggle="modal" data-target="#edit-{{$winning->id}}"><i class="fa fa-pencil"></i> Edit</a>
                                         <!-- Edit form-->
                                         @include('winning.edit')

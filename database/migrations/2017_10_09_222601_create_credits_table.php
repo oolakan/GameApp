@@ -27,6 +27,8 @@ class CreateCreditsTable extends Migration
                 ->references('id')
                 ->on('users');
 
+            $table->integer('merchants_id')->unsigned();
+
             $table->timestamps();
         });
     }

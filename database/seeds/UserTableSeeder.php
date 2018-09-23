@@ -18,26 +18,10 @@ class UserTableSeeder extends Seeder
                     'password'  =>  bcrypt('success'),
                     'phone'     =>  '08179980370',
                     'approval_status' => 'APPROVED',
+                    'delete_status' => 0,
                     'api_token' => '98234943jkdsahda8sydbhakgyluhisbdhygukaalsdkbasdkhkhb',
                     'roles_id'  =>  1
-                ],
-                [
-                'name'      =>  'Opeoluwa Joseph',
-                'email'     =>  'oolakan@yahoo.com',
-                'password'  =>  bcrypt('success'),
-                'phone'     =>  '08179980370',
-                'approval_status' => 'APPROVED',
-                'api_token' => 'kjauiduadsadsadnmadsuidasd889834783498393798',
-                'roles_id'  =>  2 ],
-
-            [   'name'      =>  'Opeoluwa Joseph',
-                'email'     =>  'opeoluwa@yahoo.com',
-                'password'  =>  bcrypt('success'),
-                'phone'     =>  '08179980370',
-                'approval_status' => 'APPROVED',
-                'api_token' => '98234943jkdsahda8sydbhakgyluhisbdhygukaluhidjkhu',
-                'roles_id'  =>  3
-            ]
+                ]
         ]);
     }
 }

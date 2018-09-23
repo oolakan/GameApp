@@ -24,9 +24,9 @@ class CreateGameNamesTable extends Migration
             $table->integer('game_quaters_id')->unsigned();
             $table->foreign('game_quaters_id')->references('id')->on('game_quaters');
 
-            $table->string('start_time');
-            $table->string('stop_time');
-            $table->string('draw_time');
+            $table->time('start_time');
+            $table->time('stop_time');
+            $table->time('draw_time');
             $table->integer('game_status');
             $table->timestamps();
 

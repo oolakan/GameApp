@@ -20,6 +20,8 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/jvectormap/jquery-jvectormap-1.2.2.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
 
 </head>
 <body class="hold-transition skin-yellow sidebar-mini">
@@ -123,7 +125,9 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{url('/users')}}"><i class="fa fa-circle-o"></i>View Users</a></li>
+                        <li><a href="{{url('/users/view/all')}}"><i class="fa fa-circle-o"></i>View All Users</a></li>
+                        <li><a href="{{url('/users/view/merchant')}}"><i class="fa fa-circle-o"></i>View Merchants</a></li>
+                        <li><a href="{{url('/users/view/agent')}}"><i class="fa fa-circle-o"></i>View Agents</a></li>
                         <li><a href="{{url('/users/create')}}"><i class="fa fa-circle-o"></i>Add New User</a></li>
                     </ul>
                 </li>
@@ -153,8 +157,7 @@
                         <li><a href="{{url('/game_name')}}"><i class="fa fa-circle-o"></i>Game Name</a></li>
                         <li><a href="{{url('/game_type')}}"><i class="fa fa-circle-o"></i>Game Types</a></li>
                         <li><a href="{{url('/game_type_option')}}"><i class="fa fa-circle-o"></i>Game Type Options</a></li>
-                        <li><a href="{{url('/game_quater')}}"><i class="fa fa-circle-o"></i>Game Quaters</a></li>
-                        <li><a href="{{url('/game')}}"><i class="fa fa-circle-o"></i>Game Information</a></li>
+                        {{--<li><a href="{{url('/game')}}"><i class="fa fa-circle-o"></i>Game Information</a></li>--}}
                     </ul>
                 </li>
                 <li class="treeview">
@@ -167,7 +170,6 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{url('/winning')}}"><i class="fa fa-circle-o"></i>View Winnings</a></li>
-                        <li><a href="{{url('/winning/create')}}"><i class="fa fa-circle-o"></i>Add Winning Game</a></li>
                     </ul>
                 </li>
 
@@ -179,7 +181,7 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{url('/transaction')}}"><i class="fa fa-circle-o"></i>View Report</a></li>
+                        <li><a href="{{url('/transaction')}}"><i class="fa fa-circle-o"></i>View Transactions</a></li>
                     </ul>
                 </li>
 
@@ -191,7 +193,7 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{url('/pin')}}"><i class="fa fa-circle-o"></i>View Report</a></li>
+                        <li><a href="{{url('/game/report')}}"><i class="fa fa-circle-o"></i>View Report</a></li>
                     </ul>
                 </li>
 
@@ -217,7 +219,9 @@
 
     <!-- /#page-wrapper -->
     <!-- jQuery 2.2.3 -->
+
     <script src="{{asset('plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
+    <script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
     <!-- Bootstrap 3.3.6 -->
     <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
     <!-- SlimScroll -->
@@ -233,9 +237,70 @@
     <script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
     <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+
+
+
+    <script src="{{asset('plugins/select2/select2.full.min.js')}}"></script>
+    <!-- InputMask -->
+    <script src="{{asset('plugins/input-mask/jquery.inputmask.js')}}"></script>
+    <script src="{{asset('plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
+    <script src="{{asset('plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
+    <!-- date-range-picker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+    <script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
+    <!-- bootstrap datepicker -->
+    <script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+
+
     <script>
-        jQuery(document).ready(function($){
+        $(function () {
+            //Datemask dd/mm/yyyy
+            $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+            //Datemask2 mm/dd/yyyy
+            $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+            //Money Euro
+            $("[data-mask]").inputmask();
+
+            //Date range picker
+            $('#reservation').daterangepicker();
+            //Date range picker with time picker
+            $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+            //Date range as a button
+            $('#daterange-btn').daterangepicker(
+                {
+                    ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },
+                    startDate: moment().subtract(29, 'days'),
+                    endDate: moment()
+                },
+                function (start, end) {
+                    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                }
+            );
+
+            //Date picker
+            $('#datepicker').datepicker({
+                autoclose: true
+            });
+
             $('#confirmDelete').on('show.bs.modal', function (e) {
+                $message = $(e.relatedTarget).attr('data-message');
+                $(this).find('.modal-body p').text($message);
+                $title = $(e.relatedTarget).attr('data-title');
+                $(this).find('.modal-title').text($title);
+
+                // Pass form reference to modal for submission on yes/ok
+                var form = $(e.relatedTarget).closest('form');
+                $(this).find('.modal-footer #confirm').data('form', form);
+            });
+
+            $('#confirmValidate').on('show.bs.modal', function (e) {
                 $message = $(e.relatedTarget).attr('data-message');
                 $(this).find('.modal-body p').text($message);
                 $title = $(e.relatedTarget).attr('data-title');
@@ -249,8 +314,19 @@
             $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
                 $(this).data('form').submit();
             });
+            $('#confirmValidate').find('.modal-footer #confirm').on('click', function(){
+                $(this).data('form').submit();
+            });
             $('#example1').DataTable();
-
+            $('#merchant').hide();
+            $('#role').change(function ()  {
+                if ($('#role').val() === '3') {
+                    $('#merchant').show();
+                }
+                else{
+                    $('#merchant').hide();
+                }
+            });
         });
 
     </script>

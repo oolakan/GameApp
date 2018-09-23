@@ -56,6 +56,8 @@
                 <!-- /.col -->
             </div>
         </form>
+        <a href="{{url('/download')}}"><button class="btn btn-block btn-flat" style="background-color: #000; color: white" >Download App Now!</button></a>
+
         <!-- /.social-auth-links -->
 
         {{--<a href="#">I forgot my password</a><br>--}}

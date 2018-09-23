@@ -14,11 +14,10 @@ class Game extends Model
     protected $fillable = [
         'game_status',
         'game_names_id',
-        'game_types_id',
-        'game_type_options_id',
         'game_quaters_id',
         'start_time',
         'stop_time',
+        'draw_time',
         'users_id',
     ];
 

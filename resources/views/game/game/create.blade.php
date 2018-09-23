@@ -24,33 +24,6 @@
                         </tr>
 
                         <tr>
-                            <th width="40%">Game Type</th>
-                            <td>
-                                <select name="game_types_id" required="" class="form-control">
-                                    <option value="">Select Game Type</option>
-                                    @foreach($GameTypes as $gameType)
-                                        <option value="{{$gameType->id}}">{{$gameType->name}}</option>
-                                    @endforeach
-                                </select>
-
-                            </td>
-                        </tr>
-
-
-                        <tr>
-                            <th width="40%">Game Type Option</th>
-                            <td>
-                                <select name="game_type_options_id" required="" class="form-control">
-                                    <option value="">Select Game Type Option</option>
-                                    @foreach($GameTypeOptions as $gameTypeOption)
-                                        <option value="{{$gameTypeOption->id}}">{{$gameTypeOption->name}}</option>
-                                    @endforeach
-                                </select>
-
-                            </td>
-                        </tr>
-
-                        <tr>
                             <th width="40%">Game Quater</th>
                             <td>
                                 <select name="game_quaters_id" required="" class="form-control">
@@ -71,6 +44,11 @@
                         <tr>
                             <th>Stop Time</th>
                             <td><input type="text" name="stop_time" value="{{old('stop_time')}}" placeholder="Stop Time" class="form-control"> </td>
+                        </tr>
+
+                        <tr>
+                            <th>Draw Time</th>
+                            <td><input type="text" name="draw_time" value="{{old('draw_time')}}" placeholder="Draw Time" class="form-control"> </td>
                         </tr>
 
 

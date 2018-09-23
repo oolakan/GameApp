@@ -7,6 +7,7 @@ use App\Credit;
 use App\Game;
 use App\GameName;
 use App\GameQuater;
+use App\GameTransaction;
 use App\GameType;
 use App\GameTypeOption;
 use App\Role;
@@ -55,9 +56,10 @@ class GameController extends Controller
         try{
             $rules = [
                 'game_names_id' => 'required',
-                'game_types_id' => 'required',
-                'game_type_options_id' => 'required',
                 'game_quaters_id' => 'required',
+                'start_time' => 'required',
+                'stop_time' => 'required',
+                'draw_time' => 'required',
             ];
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
@@ -92,8 +94,6 @@ class GameController extends Controller
         try{
             $rules = [
                 'game_names_id' => 'required',
-                'game_types_id' => 'required',
-                'game_type_options_id' => 'required',
                 'game_quaters_id' => 'required',
             ];
             $validator = Validator::make($request->all(), $rules);
@@ -123,5 +123,9 @@ class GameController extends Controller
     public function destroy($id){
         Game::destroy(base64_decode($id));
         return redirect()->action('GameController@index');
+    }
+
+    public function download(){
+        return response()->download('/home/rasholli/public_html/apk/app-release.apk');
     }
 }
