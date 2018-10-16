@@ -11,6 +11,7 @@ use App\GameTypeOption;
 use App\Role;
 use App\User;
 use App\Winning;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -36,7 +37,19 @@ class GameTransactionsController extends Controller
     private $WINNING_GAME = 'WINNING GAME';
     private $MACHINE_GAME = 'MACHINE GAME';
 
+    /**
+     * UserController constructor.
+     * @param string $APPROVED
+     */
+    public function __construct()
+    {
+        ini_set('memory_limit', '1024M');
+    }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     */
     public function index()
     {
         try {
@@ -60,6 +73,8 @@ class GameTransactionsController extends Controller
             $ex->getMessage();
         }
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -168,12 +183,13 @@ class GameTransactionsController extends Controller
         return false;
     }
 
-
-
-
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     */
     public function activateOneWinning($id) {
         try{
-
             $Transaction    =   GameTransaction::find(base64_decode($id));
             $gameNameId     =   $Transaction->game_names_id;
             $gameQuaterId   =   $Transaction->game_quaters_id;
@@ -215,7 +231,7 @@ class GameTransactionsController extends Controller
             if ($gameTypeId == '2') {
                 if ($this->isBankerInWinningNo($winningNoArr, $bankerNoArr,$gameNoArr, $gameOptionId)) {
                     $this->result = array_intersect($winningNoArr, $gameNoArr);
-                    $this->match_no_count = count($this->result) * count($bankerNoArr);
+                    $this->match_no_count = count($gameNoArr); /**count($this->result) * count($bankerNoArr);**/
                     $this->Transaction->no_of_matched_figures = $this->match_no_count;
                     $this->winning_amount = $this->winningAmount($this->Transaction->game_types_id, $this->Transaction->game_type_options_id, $this->match_no_count, $unitStake);
                 } else {
@@ -235,6 +251,7 @@ class GameTransactionsController extends Controller
             }
             $this->Transaction->save();
             if ($this->Transaction) {
+                $this->message = 'Game successfully validated';
                 flash()->success($this->message);
                 return redirect()->action('GameTransactionsController@index');
             }
@@ -273,17 +290,17 @@ class GameTransactionsController extends Controller
         else if ($tid == 2) {
 
             if ($oid == 5) {
-                $amount = 1 * $noOfMatchedFigures * $unitStake  * 240;
+                $amount = $noOfMatchedFigures * $unitStake  * 240;
                 return $amount;
             } //AGAINST 1
 
             else if ($oid == 6){
-                $amount = 2 * $noOfMatchedFigures * $unitStake  * 2100;
+                $amount = $noOfMatchedFigures * $unitStake  * 2100;
                 return $amount;
             } // AGAINST 2
 
             else if ($oid == 7) {
-                $amount = 3 * $noOfMatchedFigures * $unitStake  * 5000;
+                $amount = $noOfMatchedFigures * $unitStake  * 5000;
                 return $amount;
             } // AGAINST 3
 

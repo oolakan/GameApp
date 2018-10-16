@@ -54,6 +54,7 @@
             <th>Serial no.</th>
             <th>Game Name</th>
             <th>Game Option</th>
+            <td>Draw Type</td>
             <th>Unit Stake</th>
             <th>Sales Amount</th>
             <th>Amount Won</th>
@@ -73,6 +74,7 @@
                 <td>{{$transaction->serial_no}}</td>
                 <td>{{$transaction->game_name->name}}</td>
                 <td>{{$transaction->game_type_option->name}}</td>
+                <td>{{$transaction->draw_type}}</td>
                 <td>N{{number_format($transaction->unit_stake, 2, '.', ',')}}</td>
                 <td>N{{number_format($transaction->total_amount, 2, '.', ',')}}</td>
                 <td>N{{number_format($transaction->winning_amount, 2, '.', ',')}}</td>
@@ -84,6 +86,7 @@
             <td></td>
             <td></td>
             {{--<td></td>--}}
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

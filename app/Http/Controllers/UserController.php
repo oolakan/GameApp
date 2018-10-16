@@ -36,6 +36,16 @@ class UserController extends Controller
 
     private $ticket_id;
 
+    /**
+     * UserController constructor.
+     * @param string $APPROVED
+     */
+    public function __construct()
+    {
+        ini_set('memory_limit', '64M');
+    }
+
+
     public function index($role)
     {
         try {

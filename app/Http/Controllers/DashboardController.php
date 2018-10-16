@@ -13,6 +13,7 @@ use App\Pin;
 use App\Role;
 use App\User;
 use App\Winning;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -22,6 +23,7 @@ class DashboardController extends Controller
 
     public function __construct()
     {
+        ini_set('memory_limit', '1024M');
         $this->middleware('auth');
     }
     /**
@@ -42,10 +44,23 @@ class DashboardController extends Controller
         $dayOfWeek      =   Day::where('name', '=', $today)->first();
         $dayOfWeekId    =   $dayOfWeek->id;
         $GamesOfDay    =   GameName::where('days_id', '=', $dayOfWeekId)->get();
+
+        $TransToday     =       GameTransaction::whereDate('created_at', Carbon::today())->sum('total_amount');
+        $TransWeek      =       GameTransaction::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('total_amount');
+        $TransMonth     =       GameTransaction::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->sum('total_amount');
+
+        $TransTodayCount     =       GameTransaction::whereDate('created_at', Carbon::today())->get();
+        $TransWeekCount      =       GameTransaction::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+        $TransMonthCount     =       GameTransaction::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->get();
+
+
         return view('dashboard.index', compact(['Admins', 'Merchants', 'Agents',
             'Games', 'Transactions', 'Winnings',
-            'Users', 'GamesOfDay']));
+            'Users', 'GamesOfDay', 'TransToday', 'TransWeek', 'TransMonth',  'TransTodayCount', 'TransWeekCount', 'TransMonthCount']));
     }
+
+
+
     /**
      * Show the form for creating a new resource.
      *

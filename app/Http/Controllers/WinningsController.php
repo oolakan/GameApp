@@ -164,9 +164,7 @@ class WinningsController extends Controller
             $winningDate   = $Winning->winning_date;
             $winningTime     = $Winning->winning_time;
             $gameName = $Winning->game_name->name;
-
             $winningNoArr = explode(',', $winningNumber);
-
             $Transactions = GameTransaction::where('game_names_id', '=', $gameNameId)
                 ->where('game_quaters_id', '=', $gameQuaterId)
                 ->where('date_played', '=', $winningDate)
@@ -175,13 +173,14 @@ class WinningsController extends Controller
             if (count($Transactions) > 0) {
                 foreach ($Transactions as $transaction) {
                     $gameNameId = $transaction->game_names_id;
+                    //$gameQuaterId = $Transaction->game_quaters_id;
                     $datePlayed = $transaction->date_played;
                     $gameNoPlayed = $transaction->game_no_played;
                     $gameNoArr = explode(',', $gameNoPlayed);
 
                     $bankerNo = $transaction->banker_no;
                     $bankerNoArr = [];
-                    if (strpos( $bankerNo, ",") !== false) {
+                    if (strpos($bankerNo, ",") !== false) {
                         $bankerNoArr = explode(',', $bankerNo);
                     } else {
                         array_push($bankerNoArr, $bankerNo);
@@ -197,7 +196,9 @@ class WinningsController extends Controller
                         return response(array('status' => $this->status, 'message' => $this->message));
                     }
                     // explode winning number
-                    $winningNumber = $Winning->winning_no;
+                    // $winningNumber  = $Transaction->draw_type == $this->WINNING_GAME ? $Winning->winning_no : $Winning->machine_no;
+
+                   // $winningNumber = $Winning->winning_no;
                     $winningNoArr = explode(',', $winningNumber);
 
                     // get match numbers
@@ -208,9 +209,10 @@ class WinningsController extends Controller
                     //CHECK IF GAME TYPE IS AGAINST
                     // check if banker number is in winning number
                     if ($gameTypeId == '2') {
-                        if ($this->isBankerInWinningNo($winningNoArr, $bankerNoArr, $gameOptionId)) {
+                        if ($this->isBankerInWinningNo($winningNoArr, $bankerNoArr, $gameNoArr, $gameOptionId)) {
                             $this->result = array_intersect($winningNoArr, $gameNoArr);
-                            $this->match_no_count = count($this->result) * count($bankerNoArr);
+                            $this->match_no_count = count($gameNoArr);
+                            /**count($this->result) * count($bankerNoArr);**/
                             $this->Transaction->no_of_matched_figures = $this->match_no_count;
                             $this->winning_amount = $this->winningAmount($this->Transaction->game_types_id, $this->Transaction->game_type_options_id, $this->match_no_count, $unitStake);
                         } else {
@@ -229,10 +231,13 @@ class WinningsController extends Controller
                         $this->Transaction->status = $this->WON;
                     }
                     $this->Transaction->save();
-                }
-                if ($this->Transaction) {
-                    flash()->success('Winning games activated');
-                    return redirect()->action('WinningsController@index');
+                    if ($this->Transaction) {
+                        $this->message = 'Games successfully validated';
+                        flash()->success($this->message);
+                        return redirect()->action('GameTransactionsController@index');
+                    } else {
+
+                    }
                 }
             }
             else {
@@ -246,6 +251,7 @@ class WinningsController extends Controller
         }
     }
 
+
     /**
      * @param $winningNo
      * @param $bankerNo
@@ -253,31 +259,40 @@ class WinningsController extends Controller
      * @return bool
      * Check if banker number is in winning number
      */
-    public function isBankerInWinningNo($winningNo, $bankerNo, $oid) {
+    public function isBankerInWinningNo($winningNo, $bankerNo, $gameNoArr, $oid) {
         $result         =   array_intersect($winningNo, $bankerNo);
         $match_no_count = count($result);
-        if ($oid == 5){
-            if ($match_no_count == 1)
-                return true;
-        }//AGAINST 1
-        else if ($oid == 6){
-            if ($match_no_count == 2)
-                return true;
-        }// AGAINST 2
-        else if ($oid == 7) {
-            if ($match_no_count == 3)
-                return true;
-        }// AGAINST 3
-        else if ($oid == 8){
-            if ($match_no_count == 4)
-                return true;
-        }// AGAISNT 4
-        else if ($oid == 9){
-            if ($match_no_count == 5)
-                return true;
-        }// AGAINST 5
+        $gameNoresult   =   array_intersect($winningNo, $gameNoArr);
+        $gameNoresultCount = count($gameNoresult);
+        if ($gameNoresultCount > 0) {
+            if ($oid == 5) {
+                if ($match_no_count == 1)
+                    return true;
+            }//AGAINST 1
+            else if ($oid == 6) {
+                if ($match_no_count == 2)
+                    return true;
+            }// AGAINST 2
+            else if ($oid == 7) {
+                if ($match_no_count == 3)
+                    return true;
+            }// AGAINST 3
+            else if ($oid == 8) {
+                if ($match_no_count == 1)
+                    return true;
+            }// AGAISNT 4
+            else if ($oid == 9) {
+                //if ($match_no_count == 5)
+                return false;
+            }// AGAINST 5
+        }
+        else {
+            return false;
+        }
         return false;
     }
+
+
 
     /**
      * @param $tid
@@ -290,67 +305,78 @@ class WinningsController extends Controller
 
     public function winningAmount($tid, $oid, $noOfMatchedFigures, $unitStake) {
         $amount = 0.0;
+
         if ($tid == 1) {
             if ($oid == 1){
                 $amount = (($noOfMatchedFigures * ($noOfMatchedFigures - 1)) / 2) * (240 * $unitStake);
                 return $amount;
             }//PERM 2
             else if ($oid == 2){
-                $amount = (240 * $unitStake) * ($noOfMatchedFigures) * ($noOfMatchedFigures - 1) * ($noOfMatchedFigures -2)/6;
+                $amount = (2100 * $unitStake) * ($noOfMatchedFigures) * ($noOfMatchedFigures - 1) * ($noOfMatchedFigures -2)/6;
                 return $amount;
             }// PERM 3
             else if ($oid == 3) {
-                $amount = (240 * $unitStake) * ($noOfMatchedFigures) * ($noOfMatchedFigures - 1) * ($noOfMatchedFigures - 2) * ($noOfMatchedFigures - 3)/24;
+                $amount = (5000 * $unitStake) * ($noOfMatchedFigures) * ($noOfMatchedFigures - 1) * ($noOfMatchedFigures - 2) * ($noOfMatchedFigures - 3)/24;
                 return $amount;
             }// PERM 4
             else if ($oid == 4){
-                $amount = (240 * $unitStake) * ($noOfMatchedFigures) * ($noOfMatchedFigures - 1) * ($noOfMatchedFigures - 2) * ($noOfMatchedFigures - 3) * ($noOfMatchedFigures - 4)/120;
+                $amount = (40000 * $unitStake) * ($noOfMatchedFigures) * ($noOfMatchedFigures - 1) * ($noOfMatchedFigures - 2) * ($noOfMatchedFigures - 3) * ($noOfMatchedFigures - 4)/120;
                 return $amount;
             }// PERM 5
-        }// PERM
+        } // PERM
+
         else if ($tid == 2) {
+
             if ($oid == 5) {
-                $amount = 1 * 4 * $unitStake  * 240;
+                $amount = $noOfMatchedFigures * $unitStake  * 240;
                 return $amount;
             } //AGAINST 1
+
             else if ($oid == 6){
-                $amount = 2 * 3 * $unitStake  * 240;
+                $amount = $noOfMatchedFigures * $unitStake  * 2100;
                 return $amount;
             } // AGAINST 2
+
             else if ($oid == 7) {
-                $amount = 3 * 2 * $unitStake  * 240;
+                $amount = $noOfMatchedFigures * $unitStake  * 5000;
                 return $amount;
             } // AGAINST 3
+
             else if ($oid == 8){
                 $amount = 4 * 1 * $unitStake * 240;
                 return $amount;
-            } // AGAISNT 4
+            } // 1 AGAISNT ALL
+
             else if ($oid == 9){
-                $amount = 5 * $unitStake * 240;
+                $amount = 0;
                 return $amount;
             } // AGAINST 5
+
         }// AGAIANST
         else if ($tid == 3) {
             if ($oid == 10){
                 $amount = (240 * $unitStake * $noOfMatchedFigures) / $noOfMatchedFigures;
                 return $amount;
             }//DIRECT 2
+
             else if ($oid == 11){
                 $amount = (2100 * $unitStake * $noOfMatchedFigures) / $noOfMatchedFigures;
                 return $amount;
             }// DIRECT 3
+
             else if ($oid == 12) {
-                $amount = (2100 * $unitStake * $noOfMatchedFigures) / $noOfMatchedFigures;
+                $amount = (5000 * $unitStake * $noOfMatchedFigures) / $noOfMatchedFigures;
                 return $amount;
             }// DIRECT 4
+
             else if ($oid == 13){
-                $amount = (2100 * $unitStake * $noOfMatchedFigures) / $noOfMatchedFigures;
+                $amount = (40000 * $unitStake * $noOfMatchedFigures) / $noOfMatchedFigures;
                 return $amount;
             }// DIRECT 5
         }//DIRECT
+
         return $amount;
     }
-
     /**
      * @param $length
      * @return string

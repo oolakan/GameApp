@@ -73,13 +73,13 @@
 
                         <tr>
                             <th>Date Played</th>
-                            <td>{{$transaction->created_at}}</td>
+                            <td>{{$transaction->date_played}}</td>
                         </tr>
 
-                        {{--<tr>--}}
-                            {{--<th>Time Played</th>--}}
-                            {{--<td>{{$transaction->time_played}}</td>--}}
-                        {{--</tr>--}}
+                        <tr>
+                            <th>Time Played</th>
+                            <td>{{$transaction->time_played}}</td>
+                        </tr>
 
                         <tr>
                             <th>Winning Date</th>

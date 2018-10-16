@@ -68,10 +68,97 @@
             </div>
             <!-- /.col -->
 
+
+
+
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-green-active"><i class="fa cm-animate-fat-cursor"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Transactions Today</span>
+                        <span class="info-box-number">{{count($TransTodayCount)}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+
+
+
+
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow"><i class="fa glyphicon-fast-forward"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Transactions This Week</span>
+                        <span class="info-box-number">{{count($TransWeekCount)}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-blue"><i class="fa cm-animate-fat-cursor"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Transactions this month</span>
+                        <span class="info-box-number">{{count($TransMonthCount)}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow"><i class="fa cm-animate-fat-cursor"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Amount Today</span>
+                        <span class="info-box-number">N{{number_format($TransToday, 2, '.', ',')}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-black-gradient"><i class="fa fc-agenda-view"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Amount This Week</span>
+                        <span class="info-box-number">N{{number_format($TransWeek, 2, '.', ',')}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-green-active"><i class="fa cm-animate-fat-cursor"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Amount This Month</span>
+                        <span class="info-box-number">N{{number_format($TransMonth, 2, '.', ',')}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
         </div>
         <!-- /.row -->
-
-
 
         <div class="row">
             @if(count($GamesOfDay) > 0)
@@ -102,14 +189,9 @@
                 <!-- /.box -->
             </div>
                 @endforeach
-
         </div>
 
-
-
     </section>
-
-
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
