@@ -72,7 +72,13 @@
                             @endforeach
                             </tbody>
                         </table>
+                        {{ $Transactions->links() }}
                     </div>
+                        {{--<div class="container">--}}
+                            {{--@foreach ($Transactions as $transaction)--}}
+                                {{--{{ $transaction->ticket_id }}--}}
+                            {{--@endforeach--}}
+                        {{--</div>--}}
                 </div>
             </div>
         </div>

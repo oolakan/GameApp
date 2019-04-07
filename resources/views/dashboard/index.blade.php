@@ -57,10 +57,10 @@
             <!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box">
-                    <span class="info-box-icon bg-red"><i class="fa fa-key"></i></span>
+                    <span class="info-box-icon bg-red"><i class="fa glyphicon-fast-forward"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Game Transactions</span>
-                        <span class="info-box-number">{{count($Transactions)}}</span>
+                        <span class="info-box-number">{{number_format(count($Transactions), 0, '.', ',')}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -74,10 +74,10 @@
             <!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box">
-                    <span class="info-box-icon bg-green-active"><i class="fa cm-animate-fat-cursor"></i></span>
+                    <span class="info-box-icon bg-green-active"><i class="fa glyphicon-fast-forward"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Transactions Today</span>
-                        <span class="info-box-number">{{count($TransTodayCount)}}</span>
+                        <span class="info-box-number">{{number_format(count($TransTodayCount), 0, '.', ',')}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -94,7 +94,7 @@
                     <span class="info-box-icon bg-yellow"><i class="fa glyphicon-fast-forward"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Transactions This Week</span>
-                        <span class="info-box-number">{{count($TransWeekCount)}}</span>
+                        <span class="info-box-number">{{number_format(count($TransWeekCount), 0, '.', ',')}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -105,10 +105,10 @@
             <!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box">
-                    <span class="info-box-icon bg-blue"><i class="fa cm-animate-fat-cursor"></i></span>
+                    <span class="info-box-icon bg-blue"><i class="fa glyphicon-fast-forward"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Transactions this month</span>
-                        <span class="info-box-number">{{count($TransMonthCount)}}</span>
+                        <span class="info-box-number">{{number_format(count($TransMonthCount), 0,'.', ',')}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -119,7 +119,7 @@
             <!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box">
-                    <span class="info-box-icon bg-yellow"><i class="fa cm-animate-fat-cursor"></i></span>
+                    <span class="info-box-icon bg-yellow"><i class="fa glyphicon-fast-forward"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Total Amount Today</span>
                         <span class="info-box-number">N{{number_format($TransToday, 2, '.', ',')}}</span>
@@ -133,7 +133,7 @@
             <!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box">
-                    <span class="info-box-icon bg-black-gradient"><i class="fa fc-agenda-view"></i></span>
+                    <span class="info-box-icon bg-black-gradient"><i class="fa glyphicon-fast-forward"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Total Amount This Week</span>
                         <span class="info-box-number">N{{number_format($TransWeek, 2, '.', ',')}}</span>
@@ -147,7 +147,7 @@
             <!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box">
-                    <span class="info-box-icon bg-green-active"><i class="fa cm-animate-fat-cursor"></i></span>
+                    <span class="info-box-icon bg-green-active"><i class="fa glyphicon-fast-forward"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Total Amount This Month</span>
                         <span class="info-box-number">N{{number_format($TransMonth, 2, '.', ',')}}</span>

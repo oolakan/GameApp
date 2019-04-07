@@ -57,7 +57,7 @@ class GameTransactionsController extends Controller
             $Admins             = User::with('role')->where('roles_id', '=', 1)->get();
             $Merchants          = User::with('role')->where('roles_id', '=', 2)->get();
             $Agents             = User::with('role')->where('roles_id', '=', 3)->get();
-            $Transactions       = GameTransaction::with(['game_name', 'game_type', 'game_type_option', 'game_quater'])->get();
+            $Transactions       = GameTransaction::with(['game_name', 'game_type', 'game_type_option', 'game_quater'])->simplePaginate(1000);
             $Games              = Game::all();
             $GameNames          = GameName::all();
             $GameTypes          = GameType::all();

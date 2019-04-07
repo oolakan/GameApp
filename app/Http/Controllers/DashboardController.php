@@ -33,25 +33,26 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $today = date('l');
+
         $Users  =   User::all();
         $Admins = User::with(['role'])->where('roles_id', '=', 1)->get();
         $Merchants = User::with(['role'])->where('roles_id', '=', 2)->get();
         $Agents = User::with(['role'])->where('roles_id', '=', 3)->get();
         $Games = Game::all();
-        $Transactions       = GameTransaction::all();
-        $Winnings = Winning::all();
-        $dayOfWeek      =   Day::where('name', '=', $today)->first();
-        $dayOfWeekId    =   $dayOfWeek->id;
-        $GamesOfDay    =   GameName::where('days_id', '=', $dayOfWeekId)->get();
+        $Transactions       =       0;  //GameTransaction::all();
+        $Winnings           =       0;  //Winning::all();
+        $today                      = date('l');
+        $dayOfWeek          =       Day::where('name', '=', $today)->first();
+        $dayOfWeekId        =       $dayOfWeek->id;
+        $GamesOfDay         =       GameName::where('days_id', '=', $dayOfWeekId)->get();
 
-        $TransToday     =       GameTransaction::whereDate('created_at', Carbon::today())->sum('total_amount');
-        $TransWeek      =       GameTransaction::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('total_amount');
-        $TransMonth     =       GameTransaction::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->sum('total_amount');
+        $TransToday          =       0;//GameTransaction::whereDate('created_at', Carbon::today())->sum('total_amount');
+        $TransWeek           =       0;//GameTransaction::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->sum('total_amount');
+        $TransMonth          =       0;//GameTransaction::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->sum('total_amount');
 
-        $TransTodayCount     =       GameTransaction::whereDate('created_at', Carbon::today())->get();
-        $TransWeekCount      =       GameTransaction::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
-        $TransMonthCount     =       GameTransaction::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->get();
+        $TransTodayCount     =       0;//GameTransaction::whereDate('created_at', Carbon::today())->get();
+        $TransWeekCount      =       0;//GameTransaction::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+        $TransMonthCount     =       0;//GameTransaction::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->get();
 
 
         return view('dashboard.index', compact(['Admins', 'Merchants', 'Agents',
@@ -125,6 +126,7 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         //
+
     }
 
 }

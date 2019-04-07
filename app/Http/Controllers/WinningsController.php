@@ -46,7 +46,7 @@ class WinningsController extends Controller
             $GameTypes = GameType::all();
             $GameTypeOptions = GameTypeOption::all();
             $GameQuaters = GameQuater::all();
-            $Winnings = Winning::with(['game_name'])->orderBy('winning_date','asc')->get();
+            $Winnings = Winning::with(['game_name'])->orderBy('winning_date','asc')->simplePaginate(1000);
             return view('winning.index', compact([
                 'Admins', 'Merchants', 'Agents',
                 'Games', 'GameNames', 'GameTypes', 'Winnings',

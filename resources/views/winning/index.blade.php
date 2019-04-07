@@ -71,6 +71,7 @@
                             @endforeach
                             </tbody>
                         </table>
+                        {{ $Winnings->links() }}
                     </div>
                 </div>
             </div>
