@@ -62,7 +62,7 @@ class GameController extends Controller
                 'draw_time' => 'required',
             ];
             $validator = Validator::make($request->all(), $rules);
-            if ($validator->fails()) {
+            if ( $validator->fails() ) {
                 return back()
                     ->withInput()
                     ->withErrors($validator);

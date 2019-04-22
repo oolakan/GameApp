@@ -29,22 +29,22 @@ class GameNameController extends Controller
     public function index()
     {
         try {
-            $Users = User::with(['role', 'credit'])->get();
-            $Admins = User::with('role')->where('roles_id', '=', 1)->get();
-            $Merchants = User::with('role')->where('roles_id', '=', 2)->get();
-            $Agents = User::with('role')->where('roles_id', '=', 3)->get();
-            $Games = Game::all();
-            $GameNames = GameName::with('day')->get();
-            $GameTypes = GameType::all();
-            $GameTypeOptions = GameTypeOption::all();
-            $GameQuaters = GameQuater::all();
-            $Winnings = Winning::all();
-            $Days       =   Day::all();
+            $Users                  = User::with(['role', 'credit'])->get();
+            $Admins                 = User::with('role')->where('roles_id', '=', 1)->get();
+            $Merchants              = User::with('role')->where('roles_id', '=', 2)->get();
+            $Agents                 = User::with('role')->where('roles_id', '=', 3)->get();
+            $Games                  = Game::get();
+            $GameNames              = GameName::with('day')->get();
+            $GameTypes              = GameType::get();
+            $GameTypeOptions        = GameTypeOption::get();
+            $GameQuaters            = GameQuater::get();
+            $Winnings               = Winning::get();
+            $Days                   = Day::get();
             return view('game.game_name.index', compact([
                 'Admins', 'Merchants', 'Agents',
                 'Games', 'GameNames', 'GameTypes', 'Winnings',
                 'GameQuaters', 'GameTypeOptions', 'Users', 'Days']));
-        }catch (\ErrorException $ex){
+        } catch (\ErrorException $ex){
             $ex->getMessage();
         }
     }
@@ -80,8 +80,6 @@ class GameNameController extends Controller
             $ex->getMessage();
         }
     }
-
-
     /**
      * Store a newly created resource in storage.
      * @param  \Illuminate\Http\Request  $request

@@ -35,7 +35,9 @@ class GameReportController extends Controller
         $this->excel = $excel;
     }
 
-    /**/
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         try {
@@ -43,12 +45,12 @@ class GameReportController extends Controller
             $Admins = User::with('role')->where('roles_id', '=', 1)->get();
             $Merchants = User::with('role')->where('roles_id', '=', 2)->get();
             $Agents = User::with('role')->where('roles_id', '=', 3)->get();
-            $Games = Game::all();
-            $GameNames = GameName::all();
-            $GameTypes = GameType::all();
-            $GameTypeOptions = GameTypeOption::all();
-            $GameQuaters = GameQuater::all();
-            $Winnings = Winning::all();
+            $Games = Game::get();
+            $GameNames = GameName::get();
+            $GameTypes = GameType::get();
+            $GameTypeOptions = GameTypeOption::get();
+            $GameQuaters = GameQuater::get();
+            $Winnings = Winning::get();
             return view('game.game_report.index', compact([
                 'Admins', 'Merchants', 'Agents',
                 'Games', 'GameNames', 'GameTypes', 'Winnings',
@@ -58,6 +60,11 @@ class GameReportController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * report
+     */
     public function report(Request $request)
     {
         try {
@@ -65,12 +72,12 @@ class GameReportController extends Controller
             $Admins = User::with('role')->where('roles_id', '=', 1)->get();
             $Merchants = User::with('role')->where('roles_id', '=', 2)->get();
             $Agents = User::with('role')->where('roles_id', '=', 3)->get();
-            $Games = Game::all();
-            $GameNames = GameName::all();
-            $GameTypes = GameType::all();
-            $GameTypeOptions = GameTypeOption::all();
-            $GameQuaters = GameQuater::all();
-            $Winnings = Winning::all();
+            $Games = Game::get();
+            $GameNames = GameName::get();
+            $GameTypes = GameType::get();
+            $GameTypeOptions = GameTypeOption::get();
+            $GameQuaters = GameQuater::get();
+            $Winnings = Winning::get();
             $rules = [
                 'report_date' => 'required',
             ];
@@ -80,27 +87,21 @@ class GameReportController extends Controller
                     ->withInput()
                     ->withErrors($validator);
             }
-
             $date = str_replace(" ", "", $request->report_date);
             $dateRange = explode('-', $date);
             list($from, $to) = $dateRange;
             $dateFrom = explode('/', $from);
             $dateTo = explode('/', $to);
-
             list($fm, $fd, $fy) = $dateFrom;
             list($tm, $td, $ty) = $dateTo;
-
-            $dFrom = $fy . '-' . $fm . '-' . $fd;
-            $dTo = $ty . '-' . $tm . '-' . $td;
-
+            $dFrom  = $fy . '-' . $fm . '-' . $fd;
+            $dTo    = $ty . '-' . $tm . '-' . $td;
             $Transactions = GameTransaction::with(['game_name', 'game_type', 'game_type_option', 'user'])
                 ->whereBetween('date_played', array($dFrom, $dTo))
 //                ->leftJoin('users', 'game_transactions.users_id', '=', 'users.id')
 //                ->leftJoin('users', 'agents.merchants_id', '=', 'users.id')
                 ->get();
-
-           // dd($Transactions);
-
+           //dd($Transactions);
             $TotalAmount = GameTransaction::with(['game_name', 'game_type', 'game_type_option', 'user'])
                 ->whereBetween('date_played', array($dFrom, $dTo))
 //                ->leftJoin('users', 'game_transactions.users_id', '=', 'users.id')

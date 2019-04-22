@@ -31,17 +31,20 @@ class GameTypeController extends Controller
             $Admins = User::with('role')->where('roles_id', '=', 1)->get();
             $Merchants = User::with('role')->where('roles_id', '=', 2)->get();
             $Agents = User::with('role')->where('roles_id', '=', 3)->get();
-            $Games = Game::all();
-            $GameNames = GameName::all();
-            $GameTypes = GameType::all();
-            $GameTypeOptions = GameTypeOption::all();
-            $GameQuaters = GameQuater::all();
-            $Winnings = Winning::all();
-            return view('game.game_type.index', compact([
+            $Games = Game::get();
+            $GameNames = GameName::get();
+            $GameTypes = GameType::get();
+            $GameTypeOptions = GameTypeOption::get();
+            $GameQuaters = GameQuater::get();
+            $Winnings = Winning::get();
+            return view('game.game_type.index', compact(
+                [
                 'Admins', 'Merchants', 'Agents',
                 'Games', 'GameNames', 'GameTypes', 'Winnings',
-                'GameQuaters', 'GameTypeOptions', 'Users']));
-        }catch (\ErrorException $ex){
+                'GameQuaters', 'GameTypeOptions', 'Users']
+                ));
+        }
+        catch (\ErrorException $ex){
             $ex->getMessage();
         }
     }
@@ -64,19 +67,18 @@ class GameTypeController extends Controller
             }
             $Game                 =   new GameType();
             $Game->updateOrCreate(['name' => $request->name],
-                [   'name' => $request->name,
+                [
+                    'name' => $request->name,
                 ]);
             if($Game) {
                 flash()->success('Game Type created successfully');
                 return redirect()->action('GameTypeController@index');
             }
         }
-        catch(\ErrorException$ex){
+        catch(\ErrorException$ex) {
             $ex->getMessage();
         }
     }
-
-
     /**
      * Store a newly created resource in storage.
      * @param  \Illuminate\Http\Request  $request

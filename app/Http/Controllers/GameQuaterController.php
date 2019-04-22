@@ -32,12 +32,12 @@ class GameQuaterController extends Controller
             $Admins = User::with('role')->where('roles_id', '=', 1)->get();
             $Merchants = User::with('role')->where('roles_id', '=', 2)->get();
             $Agents = User::with('role')->where('roles_id', '=', 3)->get();
-            $Games = Game::all();
-            $GameNames = GameName::all();
-            $GameTypes = GameType::all();
-            $GameTypeOptions = GameTypeOption::all();
-            $GameQuaters = GameQuater::all();
-            $Winnings = Winning::all();
+            $Games = Game::get();
+            $GameNames = GameName::get();
+            $GameTypes = GameType::get();
+            $GameTypeOptions = GameTypeOption::get();
+            $GameQuaters = GameQuater::get();
+            $Winnings = Winning::get();
             return view('game.game_quater.index', compact([
                 'Admins', 'Merchants', 'Agents',
                 'Games', 'GameNames', 'GameTypes', 'Winnings',
