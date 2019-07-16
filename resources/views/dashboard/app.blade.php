@@ -4,7 +4,7 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>LottoStars</title>
+    <title>LottoSpot</title>
     @yield('header')
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
 
 </head>
-<body class="hold-transition skin-yellow sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -34,7 +34,7 @@
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>L</b>S</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Lotto</b>Stars</span>
+            <span class="logo-lg"><b>Lotto</b>Spots</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -214,7 +214,7 @@
         <div class="pull-right hidden-xs">
             <b>Version</b> 1.0.0
         </div>
-        <strong>LottoStars © 2017 </strong> All rights reserved.
+        <strong>LottoSpot © 2019 </strong> All rights reserved.
     </footer>
 
     <!-- /#page-wrapper -->

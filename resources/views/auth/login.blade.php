@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>LottoStars| Log in</title>
+    <title>LottoSpot| Log in</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -30,7 +30,7 @@
         {{--<div align = "center">--}}
             {{--<img src="{{asset('images/university_logo.png')}} "/>--}}
         {{--</div>--}}
-        <a href="{{url('/dashboard')}}" style="color: #f39c12"><b>Lotto</b>Stars</a>
+        <a href="{{url('/dashboard')}}" style="color: #3c8dbc"><b>Lotto</b>Spot</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
@@ -52,11 +52,11 @@
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <button type="submit" class="btn btn-block btn-flat" style="background-color: #f39c12; color: black">Sign In</button>
+                <button type="submit" class="btn btn-block btn-flat" style="background-color: #3c8dbc; color: white">Sign In</button>
                 <!-- /.col -->
             </div>
         </form>
-        <a href="{{url('/download')}}"><button class="btn btn-block btn-flat" style="background-color: #000; color: white" >Download App Now!</button></a>
+        <a href="{{url('/download')}}"><button class="btn btn-block btn-flat" style="background-color: #222d32; color: #ffffff; height: 40px" >Download App Now!</button></a>
 
         <!-- /.social-auth-links -->
 
